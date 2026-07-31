@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Color Picker from Image: Eyedropper, HEX & Color Palette",
+    "description": "Extension name"
+  },
+  "shortDesc": {
+    "message": "Abre tu imagen, apunta, clic — ahí está el HEX. Cuentagotas con zoom, RGB/HSL, paleta, historial. Color picker from image, offline.",
+    "description": "Extension short description"
+  }
+}

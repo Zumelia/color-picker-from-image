@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Color Picker from Image: Eyedropper, HEX & Color Palette",
+    "description": "Extension name"
+  },
+  "shortDesc": {
+    "message": "Resmi aç, imleci getir, tıkla — HEX hazır. Zoom damlalık, RGB/HSL, palet, geçmiş. Color picker from image, çevrimdışı.",
+    "description": "Extension short description"
+  }
+}

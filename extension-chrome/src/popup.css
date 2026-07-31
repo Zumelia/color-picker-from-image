@@ -1,0 +1,133 @@
+/* PixelPeek — попап быстрого доступа. Те же токены, что в app.css;
+   акцент продукта меняется в одном месте (--pp-accent). */
+
+:root {
+  --pp-bg: #FCFCFA;
+  --pp-surface: #FFFFFF;
+  --pp-border: #E8E8E4;
+  --pp-text: #16181D;
+  --pp-muted: #6E727D;
+  --pp-accent: #F26D5B;
+  --pp-accent-ink: #FFFFFF;
+  --pp-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --pp-bg: #14161C;
+    --pp-surface: #1A1D24;
+    --pp-border: #262933;
+    --pp-text: #F2F2EF;
+    --pp-muted: #9A9EA9;
+  }
+}
+
+* { box-sizing: border-box; }
+/* Фон обязан быть на html: окно попапа Chrome красит полотно по корневому
+   элементу, а не по body — иначе в тёмной теме по краю белая полоса. */
+html { background: var(--pp-bg); }
+body {
+  width: 300px;
+  margin: 0;
+  padding: 14px 16px;
+  background: transparent;
+  color: var(--pp-text);
+  font: 13px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+[hidden] { display: none !important; }
+
+h1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+}
+h1::before {
+  content: "◉";
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex: none;
+  border-radius: 8px;
+  background: var(--pp-accent);
+  color: #fff;
+  font-size: 14px;
+}
+h1 b { font-weight: 800; }
+.tag { margin: 8px 0 12px; color: var(--pp-muted); font-size: 11.5px; }
+
+.actions { display: flex; gap: 8px; }
+.btn {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid var(--pp-border);
+  border-radius: 9px;
+  background: var(--pp-surface);
+  color: var(--pp-text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover { border-color: var(--pp-accent); color: var(--pp-accent); }
+.btn.primary { background: var(--pp-accent); border-color: var(--pp-accent); color: var(--pp-accent-ink); }
+.btn.primary:hover { filter: brightness(0.94); color: var(--pp-accent-ink); }
+.link {
+  border: 0;
+  padding: 2px 4px;
+  background: none;
+  color: var(--pp-muted);
+  font: inherit;
+  font-size: 11.5px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.link:hover { color: var(--pp-accent); }
+button:focus-visible {
+  outline: 2px solid var(--pp-accent);
+  outline-offset: 2px;
+}
+
+.panel-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: 14px;
+}
+.panel-head h2 {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--pp-muted);
+}
+
+.history { display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; }
+.chip {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
+  aspect-ratio: 1;
+  padding: 0;
+  cursor: pointer;
+}
+.chip:hover { transform: scale(1.08); }
+.chip.flash { outline: 2px solid var(--pp-accent); outline-offset: 1px; }
+
+.hint { margin: 8px 0 0; color: var(--pp-muted); font-size: 11.5px; }
+
+/* фиксированная высота: попап не прыгает, когда появляется текст */
+.status {
+  margin: 10px 0 0;
+  min-height: 17px;
+  color: var(--pp-muted);
+  font: 11.5px var(--pp-mono);
+}
+.status.error { color: #C0392B; }
+
+@media (prefers-reduced-motion: reduce) {
+  .chip:hover { transform: none; }
+}

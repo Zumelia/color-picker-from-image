@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Color Picker from Image: Eyedropper, HEX & Color Palette",
+    "description": "Extension name"
+  },
+  "shortDesc": {
+    "message": "Ava pilt, liigu kursoriga, klõpsa — HEX käes. Suumiga pipett, RGB/HSL, palett, ajalugu. Color picker from image, offline.",
+    "description": "Extension short description"
+  }
+}

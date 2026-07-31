@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Color Picker from Image: Eyedropper, HEX & Color Palette",
+    "description": "Extension name"
+  },
+  "shortDesc": {
+    "message": "Odprite sliko, pokažite, kliknite — HEX je tu. Kapalka s povečavo, RGB/HSL, paleta, zgodovina. Color picker from image, offline.",
+    "description": "Extension short description"
+  }
+}

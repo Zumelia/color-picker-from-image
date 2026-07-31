@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Color Picker from Image: Eyedropper, HEX & Color Palette",
+    "description": "Extension name"
+  },
+  "shortDesc": {
+    "message": "ছবি খুলুন, হভার করে ক্লিক করুন — HEX পেয়ে যান। জুম আইড্রপার, RGB/HSL, প্যালেট, হিস্ট্রি। Color picker from image, অফলাইন।",
+    "description": "Extension short description"
+  }
+}

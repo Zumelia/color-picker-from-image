@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Color Picker from Image: Eyedropper, HEX & Color Palette",
+    "description": "Extension name"
+  },
+  "shortDesc": {
+    "message": "เปิดรูป ชี้ แล้วคลิก — ได้ค่า HEX ทันที หลอดดูดสีพร้อมซูม RGB/HSL พาเลต ประวัติ Color picker from image ใช้ออฟไลน์ได้",
+    "description": "Extension short description"
+  }
+}

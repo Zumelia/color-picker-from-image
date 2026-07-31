@@ -1,0 +1,147 @@
+/**
+ * PixelPeek popup — быстрый доступ: открыть пикер, снять снимок вкладки,
+ * скопировать недавний цвет. Историю пишет app.js (ключ pp-history);
+ * ядро тут не нужно — hex уже посчитан при пике.
+ *
+ * «Grab this page» живёт именно здесь: клик по иконке — это жест, дающий
+ * activeTab, поэтому captureVisibleTab доступен прямо из попапа, без фонового
+ * скрипта. Снимок уходит в пикер через контракт pp-incoming (см. app.js).
+ * EyeDropper'а в попапе сознательно НЕТ: SPEC §3 P2 требует вызывать его
+ * со страницы расширения.
+ *
+ * Обёрнуто в IIFE под jsdom-харнес (window.eval, как в пилоте).
+ */
+(() => {
+  const K_HISTORY = 'pp-history';
+  const K_INCOMING = 'pp-incoming';
+  const APP_URL = 'app.html';         // относительный путь: попап и пикер лежат рядом в src/
+
+  const $ = (id) => document.getElementById(id);
+  const historyEl = $('history');
+  const historyHint = $('historyHint');
+  const btnClear = $('btn-clear');
+  const statusEl = $('status');
+
+  const hasChrome = typeof chrome !== 'undefined' && !!chrome.storage?.local;
+  const store = {
+    async get(defaults) {
+      if (hasChrome) return chrome.storage.local.get(defaults);
+      const out = {};
+      for (const [k, v] of Object.entries(defaults)) {
+        try {
+          const raw = localStorage.getItem(k);
+          out[k] = raw === null ? v : JSON.parse(raw);
+        } catch { out[k] = v; }
+      }
+      return out;
+    },
+    async set(items) {
+      if (hasChrome) return chrome.storage.local.set(items);
+      for (const [k, v] of Object.entries(items)) localStorage.setItem(k, JSON.stringify(v));
+    },
+  };
+
+  let statusTimer = 0;
+  function setStatus(msg, isError = false) {
+    statusEl.textContent = msg;
+    statusEl.classList.toggle('error', isError);
+    clearTimeout(statusTimer);
+    if (msg) statusTimer = setTimeout(() => { statusEl.textContent = ''; }, isError ? 4000 : 1600);
+  }
+
+  function renderHistory(hist) {
+    historyEl.textContent = '';
+    for (const item of hist) {
+      const b = document.createElement('button');
+      b.className = 'chip';
+      b.style.background = item.hex;
+      b.title = item.hex;
+      b.setAttribute('aria-label', `Copy ${item.hex}`);
+      b.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(item.hex);
+          setStatus(`${item.hex} copied ✓`);
+          b.classList.add('flash');
+          setTimeout(() => b.classList.remove('flash'), 400);
+        } catch {
+          setStatus('Copy failed — check clipboard permissions', true);
+        }
+      });
+      historyEl.appendChild(b);
+    }
+    historyHint.hidden = hist.length > 0;
+    btnClear.hidden = hist.length === 0;
+  }
+
+  async function refresh() {
+    const got = await store.get({ [K_HISTORY]: [] });
+    renderHistory(Array.isArray(got[K_HISTORY]) ? got[K_HISTORY] : []);
+  }
+
+  async function openPicker() {
+    if (!(hasChrome && chrome.tabs?.create)) {
+      location.href = APP_URL;        // dev-режим без chrome.*: открыть файлом
+      return;
+    }
+    const url = chrome.runtime.getURL(`src/${APP_URL}`);
+    try {
+      // Уже открытый пикер переиспользуем: его storage.onChanged съедает
+      // pp-incoming, и свежесозданная вкладка осталась бы пустой. Свои
+      // страницы видны в tabs.query без permission "tabs".
+      const [existing] = await chrome.tabs.query({ url });
+      if (existing && typeof existing.id === 'number') {
+        await chrome.tabs.update(existing.id, { active: true });
+        if (typeof existing.windowId === 'number') {
+          await chrome.windows.update(existing.windowId, { focused: true });
+        }
+        window.close();
+        return;
+      }
+    } catch { /* не разглядели — просто откроем новую */ }
+    chrome.tabs.create({ url });
+    window.close();
+  }
+
+  $('btn-open').addEventListener('click', openPicker);
+
+  $('btn-grab').addEventListener('click', async () => {
+    if (!hasChrome || !chrome.tabs?.captureVisibleTab) {
+      setStatus('Needs the installed extension', true);
+      return;
+    }
+    try {
+      // PNG без сжатия с потерями: пикер обязан читать истинные пиксели.
+      // Снимаем ДО открытия новой вкладки — активной должна быть целевая.
+      const dataUrl = await chrome.tabs.captureVisibleTab();
+      let label = 'Page snapshot';
+      try {
+        // activeTab (жест клика по иконке) открывает title активной вкладки
+        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        if (tab?.title) label = tab.title;
+      } catch { /* без title обойдёмся */ }
+      await store.set({ [K_INCOMING]: { kind: 'dataurl', src: dataUrl, label } });
+      openPicker();
+    } catch {
+      // chrome://, страницы CWS и другие защищённые вкладки снять нельзя —
+      // говорим честно, а не молчим (SPEC: «никогда не падает молча»)
+      setStatus('This page can’t be captured — try a normal website tab', true);
+    }
+  });
+
+  btnClear.addEventListener('click', async () => {
+    await store.set({ [K_HISTORY]: [] });
+    renderHistory([]);
+    setStatus('History cleared');
+  });
+
+  // пик в открытой вкладке пикера сразу виден в попапе
+  if (hasChrome) {
+    chrome.storage.onChanged.addListener((changes, area) => {
+      if (area === 'local' && changes[K_HISTORY]) {
+        renderHistory(changes[K_HISTORY].newValue || []);
+      }
+    });
+  }
+
+  refresh();
+})();

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Color Picker from Image</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <h1>Color Picker <b>from Image</b></h1>
+    <p class="tag">Local · open source · offline</p>
+
+    <div class="actions">
+      <button id="btn-open" class="btn primary">Open picker</button>
+      <button id="btn-grab" class="btn" title="Take a snapshot of this tab and pick colors from it">
+        Grab this page
+      </button>
+    </div>
+
+    <div class="panel-head">
+      <h2>Recent colors</h2>
+      <button class="link" id="btn-clear" hidden>Clear</button>
+    </div>
+    <div class="history" id="history"></div>
+    <p class="hint" id="historyHint">Colors you pick will appear here — click one to copy.</p>
+
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Color Picker from Image: Eyedropper, HEX & Color Palette",
+    "description": "Extension name"
+  },
+  "shortDesc": {
+    "message": "Atverkite paveikslėlį, spustelėkite — HEX jūsų. Pipetė su zoom, RGB/HSL, paletė, istorija. Color picker from image, neprisijungus.",
+    "description": "Extension short description"
+  }
+}

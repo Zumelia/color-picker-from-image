@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Color Picker from Image: Eyedropper, HEX & Color Palette",
+    "description": "Extension name"
+  },
+  "shortDesc": {
+    "message": "افتح صورتك، مرّر وانقر — تحصل على HEX. قطّارة مع تكبير، RGB/HSL، لوحة ألوان، سجلّ. Color picker from image، دون اتصال.",
+    "description": "Extension short description"
+  }
+}

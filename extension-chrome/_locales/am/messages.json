@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Color Picker from Image: Eyedropper, HEX & Color Palette",
+    "description": "Extension name"
+  },
+  "shortDesc": {
+    "message": "ምስልዎን ይክፈቱ፣ ይጠቁሙ፣ ይጫኑ — HEX ያገኛሉ። ዙም መንጠባጠቢያ፣ RGB/HSL፣ ፓለት፣ ታሪክ። Color picker from image፣ ከመስመር ውጭ።",
+    "description": "Extension short description"
+  }
+}

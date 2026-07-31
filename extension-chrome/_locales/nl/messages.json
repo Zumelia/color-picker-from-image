@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Color Picker from Image: Eyedropper, HEX & Color Palette",
+    "description": "Extension name"
+  },
+  "shortDesc": {
+    "message": "Open je afbeelding, wijs aan, klik — pak de hex. Zoom-pipet, RGB/HSL, palet, geschiedenis. Color picker from image, offline.",
+    "description": "Extension short description"
+  }
+}

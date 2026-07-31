@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Color Picker from Image</title>
+    <link rel="stylesheet" href="app.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Color Picker <b>from Image</b></h1>
+      <p class="tag">Local · open source · your image never leaves the browser</p>
+      <div class="actions">
+        <button id="btn-open" class="btn">Open image…</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="stage" id="stage" tabindex="-1" aria-label="Image area">
+        <div class="empty" id="empty">
+          <div class="empty-icon">🎨</div>
+          <h2>Drop an image here</h2>
+          <p>paste one with <kbd>Ctrl</kbd>+<kbd>V</kbd>, or</p>
+          <button class="btn primary" id="btn-browse">Browse files</button>
+          <p class="formats">PNG · JPG · WebP · GIF · SVG · AVIF</p>
+        </div>
+        <div class="stage-inner" id="stageInner" hidden>
+          <canvas id="canvas"></canvas>
+          <div class="marker" id="marker" hidden></div>
+          <div class="loupe" id="loupe" hidden>
+            <canvas id="loupeCanvas"></canvas>
+            <div class="loupe-label" id="loupeLabel"></div>
+          </div>
+        </div>
+      </section>
+
+      <aside>
+        <section class="panel">
+          <h2>Picked color</h2>
+          <div class="swatch placeholder" id="pickedSwatch"><span id="pickedBig">Click the image to pick a color</span></div>
+          <button class="val"><span class="k">HEX</span><span class="v" id="valHex">—</span></button>
+          <button class="val"><span class="k">RGB</span><span class="v" id="valRgb">—</span></button>
+          <button class="val"><span class="k">HSL</span><span class="v" id="valHsl">—</span></button>
+          <label class="opt"><input type="checkbox" id="autoCopy" checked /> Auto-copy HEX on pick</label>
+        </section>
+
+        <section class="panel" id="palettePanel" hidden>
+          <h2>Palette</h2>
+          <div class="palette" id="palette"></div>
+          <p class="hint">Dominant colors of the image — click to copy.</p>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2>History</h2>
+            <button class="link" id="btn-clear" hidden>Clear</button>
+          </div>
+          <div class="history" id="history"></div>
+          <p class="hint" id="historyHint">Picked colors appear here and stay between sessions.</p>
+        </section>
+      </aside>
+    </main>
+
+    <footer class="statusbar">
+      <span id="statFile">No image yet</span>
+      <span id="statPos" class="mono"></span>
+      <span class="stat-hover" id="statHoverWrap" hidden><i id="statDot"></i><span id="statHover"></span></span>
+      <span class="spacer"></span>
+      <span class="keys">Arrows move 1 px · Ctrl+Arrows 10 px · Enter picks · Ctrl+V pastes</span>
+    </footer>
+
+    <input type="file" id="file" accept="image/*" hidden />
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

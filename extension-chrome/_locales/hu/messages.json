@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Color Picker from Image: Eyedropper, HEX & Color Palette",
+    "description": "Extension name"
+  },
+  "shortDesc": {
+    "message": "Nyisd meg a képet, mutass rá, kattints — kész a HEX. Zoom pipetta, RGB/HSL, paletta, előzmények. Color picker from image, offline.",
+    "description": "Extension short description"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Color Picker from Image: Eyedropper, HEX & Color Palette",
+    "description": "Extension name"
+  },
+  "shortDesc": {
+    "message": "تصویر را باز کنید، اشاره و کلیک — HEX آماده است. قطره‌چکان با زوم، RGB/HSL، پالت، تاریخچه. Color picker from image، آفلاین.",
+    "description": "Extension short description"
+  }
+}

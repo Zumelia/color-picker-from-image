@@ -1,0 +1,27 @@
+{
+  "name": "color-picker-from-image",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Color Picker from Image — monorepo: shared core, Chrome extension and the product site.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zumelia/color-picker-from-image.git"
+  },
+  "author": "Zumelia",
+  "license": "MIT",
+  "scripts": {
+    "test": "node test/core.test.mjs && node test/sync.test.mjs && node test/popup.test.mjs && node test/background.test.mjs",
+    "sync": "./scripts/sync-core.sh"
+  },
+  "keywords": [
+    "color-picker",
+    "eyedropper",
+    "hex",
+    "palette",
+    "browser-extension"
+  ],
+  "devDependencies": {
+    "jsdom": "^30.0.1"
+  }
+}

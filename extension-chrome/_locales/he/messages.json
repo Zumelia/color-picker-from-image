@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Color Picker from Image: Eyedropper, HEX & Color Palette",
+    "description": "Extension name"
+  },
+  "shortDesc": {
+    "message": "פתחו תמונה, רחפו ולחצו — קיבלתם HEX. טפטפת עם זום, RGB/HSL, פלטה, היסטוריה. Color picker from image, לא מקוון.",
+    "description": "Extension short description"
+  }
+}

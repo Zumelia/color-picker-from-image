@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Color Picker from Image: Eyedropper, HEX & Color Palette",
+    "description": "Extension name"
+  },
+  "shortDesc": {
+    "message": "画像を開いてクリックするだけで HEX を取得。ズーム付きスポイト、RGB/HSL、パレット、履歴。Color picker from image、オフライン対応。",
+    "description": "Extension short description"
+  }
+}

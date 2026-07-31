@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Color Picker from Image: Eyedropper, HEX & Color Palette",
+    "description": "Extension name"
+  },
+  "shortDesc": {
+    "message": "Fungua picha, elekeza, bofya — pata HEX. Kidropa chenye zoom, RGB/HSL, paleti, historia. Color picker from image, nje ya mtandao.",
+    "description": "Extension short description"
+  }
+}

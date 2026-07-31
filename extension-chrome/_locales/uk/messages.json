@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Color Picker from Image: Eyedropper, HEX & Color Palette",
+    "description": "Extension name"
+  },
+  "shortDesc": {
+    "message": "Відкрийте картинку, наведіть, клацніть — HEX готовий. Піпетка з лупою, RGB/HSL, палітра, історія. Color picker from image, офлайн.",
+    "description": "Extension short description"
+  }
+}

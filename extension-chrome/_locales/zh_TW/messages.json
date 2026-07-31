@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Color Picker from Image: Eyedropper, HEX & Color Palette",
+    "description": "Extension name"
+  },
+  "shortDesc": {
+    "message": "開啟圖片，懸停點擊即得 HEX。放大吸管、RGB/HSL、調色盤、歷史記錄。Color picker from image，離線可用。",
+    "description": "Extension short description"
+  }
+}

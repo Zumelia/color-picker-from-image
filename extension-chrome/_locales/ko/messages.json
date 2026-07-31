@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Color Picker from Image: Eyedropper, HEX & Color Palette",
+    "description": "Extension name"
+  },
+  "shortDesc": {
+    "message": "이미지를 열고 클릭하면 HEX 완성. 확대 스포이드, RGB/HSL, 팔레트, 기록. Color picker from image, 오프라인.",
+    "description": "Extension short description"
+  }
+}

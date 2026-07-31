@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Color Picker from Image: Eyedropper, HEX & Color Palette",
+    "description": "Extension name"
+  },
+  "shortDesc": {
+    "message": "Buka imej anda, tuding, klik — dapat HEX. Penitis berzum, RGB/HSL, palet, sejarah. Color picker from image, luar talian.",
+    "description": "Extension short description"
+  }
+}

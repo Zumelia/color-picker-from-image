@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Color Picker from Image: Eyedropper, HEX & Color Palette",
+    "description": "Extension name"
+  },
+  "shortDesc": {
+    "message": "Mở ảnh, rê chuột, nhấp — lấy ngay HEX. Ống hút màu có zoom, RGB/HSL, bảng màu, lịch sử. Color picker from image, ngoại tuyến.",
+    "description": "Extension short description"
+  }
+}
