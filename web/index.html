@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Color Picker from Image — Zoom Eyedropper, HEX, RGB &amp; HSL</title>
+<meta name="description" content="Open a screenshot, logo or photo and pick the exact color — zoom eyedropper, HEX, RGB, HSL, palette. Works right here in the browser; the Chrome extension adds history and page capture.">
+<link rel="canonical" href="https://colorpickfromimage.com/">
+<meta property="og:title" content="Color Picker from Image — Zoom Eyedropper, HEX, RGB &amp; HSL">
+<meta property="og:description" content="Open a screenshot, logo or photo and pick the exact color. Real pixels, no upload, no sign-in.">
+<meta property="og:image" content="https://colorpickfromimage.com/assets/og.png?v=1">
+<meta property="og:site_name" content="Color Picker from Image">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/favicon.png?v=1" type="image/png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=1">
+<link rel="stylesheet" href="/assets/fonts.css?v=1">
+<link rel="stylesheet" href="/assets/site.css?v=1">
+<script>
+  // тема до первой отрисовки — без мигания
+  try {
+    var t = localStorage.getItem('cpfi-theme');
+    if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+  } catch (e) {}
+</script>
+</head>
+<body>
+<a class="skip" href="#pick">Skip to the tool</a>
+
+<header class="hdr">
+  <div class="wrap">
+    <div class="hdr-in">
+      <a class="logo" href="/"><span class="mark"><i><b></b></i></span> Color Picker from Image</a>
+      <nav class="nav" aria-label="Main">
+        <a href="#pick">Try it</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="https://github.com/Zumelia/color-picker-from-image" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <span class="spacer"></span>
+      <div class="hdr-actions">
+        <button class="icon-btn" data-theme-toggle aria-label="Switch theme">☾</button>
+        <button class="icon-btn burger" data-menu-toggle aria-expanded="false" aria-controls="sheet" aria-label="Menu">☰</button>
+        <!-- до публикации CTA ведёт на /welcome/; после одобрения в CWS —
+             заменить на URL листинга с ?hl=en (шаг в cws_submission.md) -->
+        <a class="btn btn-sm" data-cta href="/welcome/"><span class="ring"></span>Add to Chrome</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="sheet" id="sheet" hidden>
+  <div class="wrap">
+    <div class="sheet-head">
+      <a class="logo" href="/"><span class="mark"><i><b></b></i></span> Color Picker from Image</a>
+      <span class="spacer"></span>
+      <button class="icon-btn" data-menu-toggle aria-label="Close">✕</button>
+    </div>
+    <a class="item" href="#pick">Try it <small>Pick a color right on this page</small></a>
+    <a class="item" href="/privacy/">Privacy <small>What the extension can and cannot see</small></a>
+    <a class="item" href="https://github.com/Zumelia/color-picker-from-image" target="_blank" rel="noopener">GitHub <small>MIT source</small></a>
+    <p><a class="btn" data-cta href="/welcome/"><span class="ring"></span>Add to Chrome</a></p>
+  </div>
+</div>
+
+<main id="main">
+  <!-- hero -->
+  <section class="wrap hero">
+    <h1>Color picker from image — hover, click, get the <em>HEX</em></h1>
+    <p class="sub">Open a screenshot, logo or photo and take the exact color out of it. Real pixels, no upload, no sign-in.</p>
+    <div class="cta-row">
+      <a class="btn" data-cta href="/welcome/"><span class="ring"></span>Add to Chrome</a>
+      <a class="btn btn-ghost" href="#pick">Try it below ↓</a>
+    </div>
+    <div class="trust">no ads · no account · open source · offline</div>
+  </section>
+
+  <!-- живой инструмент -->
+  <section class="wrap tool" id="pick">
+    <div class="tool-card" id="tool-empty">
+      <div class="drop" id="drop" role="button" tabindex="0" aria-label="Open an image">
+        <span class="mark"><i><b></b></i></span>
+        <div class="drop-title">Drop an image, press <kbd>Ctrl+V</kbd>, or <span class="browse">browse</span></div>
+        <div class="drop-note">PNG, JPG, WebP, GIF, SVG, AVIF — the file stays on this page.</div>
+      </div>
+      <p class="tool-err" id="tool-err" hidden></p>
+    </div>
+
+    <div class="tool-card" id="tool-loaded" hidden>
+      <div class="tool-meta">
+        <span class="fname" id="t-fname"></span>
+        <span class="fdims" id="t-fdims"></span>
+        <span class="fchip">loupe 15×15</span>
+        <span class="spacer"></span>
+        <button class="again" id="t-again">Open another</button>
+        <span class="paste-note">Ctrl+V replaces</span>
+      </div>
+      <div class="tool-grid">
+        <div class="stagebox" id="stagebox">
+          <canvas class="pic" id="t-canvas"></canvas>
+          <div class="cross-v" id="cross-v" hidden></div>
+          <div class="cross-h" id="cross-h" hidden></div>
+          <div class="loupe" id="t-loupe" hidden>
+            <canvas id="t-loupe-canvas" width="135" height="135"></canvas>
+            <span class="badge" id="t-badge"></span>
+          </div>
+          <span class="coords" id="t-coords" hidden></span>
+        </div>
+        <div class="panel">
+          <div class="cap">Picked color</div>
+          <div class="picked-row">
+            <span class="swatch" id="t-swatch"></span>
+            <span class="hexbig" id="t-hexbig">—</span>
+          </div>
+          <div class="vals" id="t-vals">
+            <div class="val"><span class="k">HEX</span><span class="v" data-v="hex">—</span><button class="copy" data-copy="hex">Copy</button></div>
+            <div class="val"><span class="k">RGB</span><span class="v" data-v="rgb">—</span><button class="copy" data-copy="rgb">Copy</button></div>
+            <div class="val"><span class="k">HSL</span><span class="v" data-v="hsl">—</span><button class="copy" data-copy="hsl">Copy</button></div>
+          </div>
+          <div class="autocopy"><i></i>Auto-copy on pick: on</div>
+          <div class="hr"></div>
+          <div class="cap">Dominant colors</div>
+          <div class="pal" id="t-pal"></div>
+          <div class="hr"></div>
+          <div class="keys">← ↑ → ↓ 1 px · Ctrl 10 px · Enter picks · Esc clears</div>
+        </div>
+      </div>
+    </div>
+    <div class="tool-foot"><i></i>Runs in your browser. Your image never leaves this page.</div>
+    <input type="file" id="t-file" accept="image/*" hidden>
+  </section>
+
+  <!-- выгоды -->
+  <section class="wrap section">
+    <div class="sec-head">
+      <h2>The details that decide it</h2>
+      <p>Each of these comes from reviews of other pickers — praised where they work, cursed where they don't.</p>
+    </div>
+    <div class="grid3">
+      <div class="bcard"><span class="dot"></span><h3>Zoom loupe that shows every pixel</h3><p>The magnifier shows the actual bitmap in a 15×15 pixel grid, and the pixel under the crosshair is outlined — you always know which one you're reading.</p></div>
+      <div class="bcard"><span class="dot"></span><h3>The values panel stays open after a pick</h3><p>Pick, compare, pick again. HEX, RGB and HSL stay on screen until you close them — no chasing a tooltip that vanishes.</p></div>
+      <div class="bcard"><span class="dot"></span><h3>Auto-copy that really lands in the clipboard</h3><p>Every pick writes the HEX to your clipboard and confirms it on screen. If the write fails, you see that too — no silent "copied".</p></div>
+      <div class="bcard"><span class="dot"></span><h3>Reads your file — not a blurry re-render</h3><p>Values come from the decoded image data, not from a scaled screenshot of it. What you opened is what you sample.</p></div>
+      <div class="bcard"><span class="dot"></span><h3>1 px arrow keys, Enter to pick</h3><p>Get close with the mouse, land on the exact pixel with the arrows. Enter picks, Esc clears the crosshair.</p></div>
+      <div class="bcard"><span class="dot"></span><h3>No ads, no history access, no install warnings</h3><p>Nothing to dismiss, nothing watching your tabs. The extension asks for no site access at install and runs only where you invoke it.</p></div>
+    </div>
+  </section>
+
+  <!-- расширение умеет больше -->
+  <section class="wrap section">
+    <div class="sec-head">
+      <h2>The extension does more</h2>
+      <p>This page picks from files you open. The extension reaches the things a website can't.</p>
+    </div>
+    <div class="grid3">
+      <div class="mcard">
+        <div class="art" aria-hidden="true">
+          <div style="display:flex;align-items:center;gap:6px;padding:9px 12px;border-bottom:1px solid var(--line2)">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--line)"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--line)"></span>
+            <span style="flex:1;margin-left:8px;height:14px;border-radius:999px;background:var(--chip)"></span>
+          </div>
+          <div style="position:relative;padding:12px;display:flex;flex-direction:column;gap:8px">
+            <span style="height:10px;width:70%;border-radius:999px;background:var(--chip)"></span>
+            <span style="height:10px;width:88%;border-radius:999px;background:var(--chip)"></span>
+            <span style="height:10px;width:55%;border-radius:999px;background:var(--chip)"></span>
+            <span style="position:absolute;inset:10px 18px -46px 40%;border:2px dashed var(--coral);border-radius:8px"></span>
+            <span style="position:absolute;right:26px;top:64px;font-family:var(--mono);font-size:10px;background:#16181D;color:#FCFCFA;border-radius:999px;padding:3px 8px">captured →</span>
+          </div>
+        </div>
+        <div class="txt"><h3>Grab this page as an image</h3><p>One button in the popup captures the tab you're on and opens it in the picker.</p></div>
+      </div>
+      <div class="mcard">
+        <div class="art" aria-hidden="true">
+          <span style="position:absolute;left:12px;top:12px;width:46%;height:80px;border-radius:8px;background:radial-gradient(60px 40px at 70% 30%,#F26D5B 0 40%,rgba(242,109,91,0) 70%),linear-gradient(150deg,#2E6F8E,#1E2230)"></span>
+          <span style="position:absolute;left:34%;top:40px;right:14px;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 14px 30px -18px rgba(0,0,0,.45);display:flex;flex-direction:column;padding:5px;font-size:11.5px;color:var(--muted)">
+            <span style="padding:6px 10px">Open image in new tab</span>
+            <span style="padding:6px 10px">Save image as…</span>
+            <span style="height:1px;background:var(--line2);margin:3px 6px"></span>
+            <span style="padding:6px 10px;border-radius:7px;background:var(--coral);color:#fff;font-weight:700">Pick color from this image</span>
+          </span>
+        </div>
+        <div class="txt"><h3>Right-click any picture → pick from it</h3><p>No saving, no re-uploading. The image opens straight in the picker.</p></div>
+      </div>
+      <div class="mcard">
+        <div class="art" aria-hidden="true" style="padding:14px;display:flex;flex-direction:column;gap:10px">
+          <span style="font-family:var(--mono);font-size:10px;color:var(--faint);letter-spacing:.1em;text-transform:uppercase">History · 50 kept</span>
+          <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:7px">
+            <span style="height:30px;border-radius:8px;background:#F26D5B"></span><span style="height:30px;border-radius:8px;background:#2E6F8E"></span><span style="height:30px;border-radius:8px;background:#E9C46A"></span><span style="height:30px;border-radius:8px;background:#1E2230"></span><span style="height:30px;border-radius:8px;background:#F2F2EF;border:1px solid var(--line2)"></span><span style="height:30px;border-radius:8px;background:#8E4A5B"></span>
+            <span style="height:30px;border-radius:8px;background:#47B5A0"></span><span style="height:30px;border-radius:8px;background:#C05244"></span><span style="height:30px;border-radius:8px;background:#5B6ACF"></span><span style="height:30px;border-radius:8px;background:#C9A96A"></span><span style="height:30px;border-radius:8px;background:#3A3F4C"></span><span style="height:30px;border-radius:8px;background:#EDD8C2"></span>
+          </div>
+          <span style="font-family:var(--mono);font-size:10.5px;color:var(--muted)">#F26D5B · latest pick</span>
+        </div>
+        <div class="txt"><h3>50-color history that survives restarts</h3><p>Every pick is kept on this device — close the browser, it's still there.</p></div>
+      </div>
+    </div>
+    <div class="sec-cta">
+      <a class="btn" data-cta href="/welcome/"><span class="ring"></span>Add to Chrome</a>
+    </div>
+  </section>
+
+  <!-- privacy -->
+  <section class="wrap section">
+    <div class="privacy-card">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <h2>Permissions, all of them</h2>
+        <div class="perms">
+          <div class="perm"><span class="name">storage</span><span class="note">keeps your 50-color history and settings on this device</span></div>
+          <div class="perm"><span class="name">activeTab</span><span class="badge">action-scoped</span><span class="note">granted for one tab, only at the moment you invoke it</span></div>
+          <div class="perm"><span class="name">contextMenus</span><span class="note">adds "Pick color from this image" to the right-click menu</span></div>
+          <div class="perm"><span class="name">scripting</span><span class="badge">action-scoped</span><span class="note">on your right-click command, reads that one image for the picker; nothing runs on its own</span></div>
+        </div>
+        <div class="privacy-note">No tabs, no history, no "read all sites". The full text is short: <a href="/privacy/">the privacy note</a>, and the <a href="https://github.com/Zumelia/color-picker-from-image" target="_blank" rel="noopener">source on GitHub</a>.</div>
+      </div>
+      <div>
+        <div class="devtools" aria-hidden="true">
+          <div class="tabs"><span>Elements</span><span>Console</span><span class="on">Network</span><span>Sources</span></div>
+          <div class="cols"><span>Name</span><span>Status</span><span>Type</span><span>Size</span><span>Time</span></div>
+          <div class="empty">No requests<br><span>Recording network activity…</span></div>
+        </div>
+        <div class="devtools-cap">The Network panel while opening an image and picking a color. Zero requests — nothing to send, nowhere to send it.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- faq -->
+  <section class="wrap section">
+    <div class="sec-head"><h2>Questions</h2></div>
+    <div class="faq-wrap">
+      <details class="faq" open>
+        <summary><span class="q">How do I pick a color from an image?</span><span class="sign"></span></summary>
+        <div class="a">Drop the image on this page (or press Ctrl+V), move the loupe to the pixel you want and click. The HEX lands in your clipboard; RGB and HSL sit next to it in the panel.</div>
+      </details>
+      <details class="faq">
+        <summary><span class="q">How do I pick a color from a screenshot?</span><span class="sign"></span></summary>
+        <div class="a">Take the screenshot as usual, then paste it here with Ctrl+V — no need to save a file first. Screenshots are PNG, so the values you read are exact.</div>
+      </details>
+      <details class="faq">
+        <summary><span class="q">Does it upload my image?</span><span class="sign"></span></summary>
+        <div class="a">No. The image is decoded inside your browser tab and stays there. Open the DevTools Network panel while you work — nothing is sent.</div>
+      </details>
+      <details class="faq">
+        <summary><span class="q">HEX vs RGB vs HSL — which one do I need?</span><span class="sign"></span></summary>
+        <div class="a">They are the same color in three notations, and CSS accepts all of them. HEX is the shortest, RGB is what design tools ask for, HSL is the easiest to adjust by hand. The panel shows all three so you copy whichever your tool expects.</div>
+      </details>
+      <details class="faq">
+        <summary><span class="q">Can it pick from a web page, not a file?</span><span class="sign"></span></summary>
+        <div class="a">This page can't — browsers keep sites out of other tabs. The extension can: it captures the page you invoke it on and picks from the real rendered pixels.</div>
+      </details>
+    </div>
+  </section>
+
+  <!-- финальный CTA -->
+  <section class="wrap section">
+    <div class="final">
+      <h2>Take the picker with you</h2>
+      <p>Page capture, right-click picking and history live in the extension. This page stays here for when you just have a file.</p>
+      <a class="btn" data-cta href="/welcome/"><span class="ring"></span>Add to Chrome</a>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-cols">
+      <div>
+        <a class="logo" href="/"><span class="mark"><i><b></b></i></span> Color Picker from Image</a>
+        <p class="tagline">A color picker that reads your file, right here in the browser.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="https://github.com/Zumelia/color-picker-from-image" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="/privacy/">Privacy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@zumelia.com">hello@zumelia.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>Built by <a href="https://zumelia.com" target="_blank" rel="noopener">Zumelia</a> · © 2026</span>
+      <span class="spacer"></span>
+      <button class="mini icon-btn" data-theme-toggle aria-label="Switch theme">☾</button>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="/assets/site.js?v=1"></script>
+</body>
+</html>

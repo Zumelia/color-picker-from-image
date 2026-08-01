@@ -8,13 +8,11 @@ import { readFileSync } from 'node:fs';
 
 const root = new URL('..', import.meta.url);
 const src = readFileSync(new URL('core/core.js', root), 'utf8');
-const copy = readFileSync(new URL('extension-chrome/src/core.js', root), 'utf8');
+for (const target of ['extension-chrome/src/core.js', 'web/assets/core.js']) {
+  const copy = readFileSync(new URL(target, root), 'utf8');
+  const nl = copy.indexOf('\n');
+  assert.ok(copy.slice(0, nl).includes('GENERATED FILE'), `${target}: без предупреждающего заголовка`);
+  assert.equal(copy.slice(nl + 1), src, `${target} разошёлся с core/core.js — запусти npm run sync`);
+}
 
-const nl = copy.indexOf('\n');
-assert.ok(copy.slice(0, nl).includes('GENERATED FILE'), 'копия ядра без предупреждающего заголовка');
-assert.equal(
-  copy.slice(nl + 1), src,
-  'extension-chrome/src/core.js разошёлся с core/core.js — запусти npm run sync',
-);
-
-console.log('sync: копия ядра совпадает с исходником');
+console.log('sync: обе копии ядра совпадают с исходником');
