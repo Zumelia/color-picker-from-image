@@ -15,6 +15,7 @@
   const K_HISTORY = 'pp-history';
   const K_INCOMING = 'pp-incoming';
   const K_HIGHLIGHT = 'pp-highlight-grab';  // сигнал из пикера: подсветить Grab
+  const K_PICKER = 'pp-picker-tab';         // саморегистрация вкладки пикера
   const APP_URL = 'app.html';         // относительный путь: попап и пикер лежат рядом в src/
 
   // Заполнить при публикации: https://chromewebstore.google.com/detail/<id>/reviews
@@ -120,20 +121,24 @@
       return;
     }
     const url = chrome.runtime.getURL(`src/${APP_URL}`);
+    // Уже открытый пикер переиспользуем: его storage.onChanged съедает
+    // pp-incoming, и свежесозданная вкладка осталась бы пустой. Ищем по
+    // саморегистрации pp-picker-tab: tabs.query({url}) без permission "tabs"
+    // свои страницы не матчит (грабля 0.1.3), а tabs.update по id — без прав.
     try {
-      // Уже открытый пикер переиспользуем: его storage.onChanged съедает
-      // pp-incoming, и свежесозданная вкладка осталась бы пустой. Свои
-      // страницы видны в tabs.query без permission "tabs".
-      const [existing] = await chrome.tabs.query({ url });
-      if (existing && typeof existing.id === 'number') {
-        await chrome.tabs.update(existing.id, { active: true });
-        if (typeof existing.windowId === 'number') {
-          await chrome.windows.update(existing.windowId, { focused: true });
+      const got = await store.get({ [K_PICKER]: null });
+      const reg = got[K_PICKER];
+      if (reg && typeof reg.id === 'number') {
+        await chrome.tabs.update(reg.id, { active: true });
+        if (typeof reg.windowId === 'number') {
+          await chrome.windows.update(reg.windowId, { focused: true });
         }
         window.close();
         return;
       }
-    } catch { /* не разглядели — просто откроем новую */ }
+    } catch {
+      await store.remove(K_PICKER);   // id протух (вкладку закрыли) — забываем
+    }
     chrome.tabs.create({ url });
     window.close();
   }

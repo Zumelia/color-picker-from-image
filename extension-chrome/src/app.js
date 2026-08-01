@@ -26,6 +26,7 @@ import {
 const K_HISTORY = 'pp-history';
 const K_SETTINGS = 'pp-settings';
 const K_INCOMING = 'pp-incoming';
+const K_PICKER = 'pp-picker-tab';   // саморегистрация вкладки пикера {id, windowId}
 
 const LOUPE_GRID = 15;      // нечётное: пик-пиксель ровно в центре сетки
 const LOUPE_CELL = 10;
@@ -573,4 +574,19 @@ if (hasChrome) {
       consumeIncoming(changes[K_INCOMING].newValue);
     }
   });
+
+  // Регистрируем свою вкладку: попап и SW находят открытый пикер по этому ключу.
+  // tabs.query({url}) без permission "tabs" свои страницы НЕ матчит (грабля 0.1.3:
+  // открывалась вторая пустая вкладка, а снимок съедала старая). getCurrent и
+  // tabs.update по id работают без прав.
+  if (chrome.tabs?.getCurrent) {
+    chrome.tabs.getCurrent().then((tab) => {
+      if (tab && typeof tab.id === 'number') {
+        store.set({ [K_PICKER]: { id: tab.id, windowId: tab.windowId } });
+      }
+    }).catch(() => {});
+    window.addEventListener('pagehide', () => {
+      try { chrome.storage.local.remove(K_PICKER); } catch { /* не успели — id протухнет, открыватели переживут */ }
+    });
+  }
 }

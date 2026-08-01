@@ -27,7 +27,7 @@ function boot(opts) {
 }
 
 const WELCOME = 'https://colorpickfromimage.com/welcome/';
-const UNINSTALL = 'https://colorpickfromimage.com/uninstall/?v=0.1.3';
+const UNINSTALL = 'https://colorpickfromimage.com/uninstall/?v=0.1.4';
 
 await t('onInstalled(install): меню пересоздано, welcome открыт, uninstall-URL стоит', async () => {
   const { handlers, calls } = boot();
@@ -63,16 +63,29 @@ await t('тир 1: ACAO есть → kind:dataurl, снимок не снима�
   assert.equal(env.calls.created[0].url, APP_URL);
 });
 
-await t('открытый пикер переиспользуется: фокус вместо новой вкладки', async () => {
+await t('открытый пикер переиспользуется по pp-picker-tab: фокус вместо новой вкладки', async () => {
   const env = boot({
     execResult: { dataUrl: 'data:,x', name: 'a.png', visible: null },
-    tabs: [{ id: 5, windowId: 2, url: APP_URL }],
+    store: { 'pp-picker-tab': { id: 5, windowId: 2 } },
   });
   env.handlers.menuClick(MENU, TAB);
   await flush();
   assert.equal(env.calls.created.length, 0, 'вторая вкладка пикера не создаётся');
   assert.deepEqual(env.calls.updated[0], [5, { active: true }]);
   assert.deepEqual(env.calls.winUpdated[0], [2, { focused: true }]);
+});
+
+await t('протухший pp-picker-tab: регистрация забыта, открыта новая вкладка', async () => {
+  const env = boot({
+    execResult: { dataUrl: 'data:,x', name: 'a.png', visible: null },
+    store: { 'pp-picker-tab': { id: 99, windowId: 7 } },
+    failUpdate: true,
+  });
+  env.handlers.menuClick(MENU, TAB);
+  await flush();
+  assert.equal(env.state.store['pp-picker-tab'], undefined, 'мёртвый id должен забываться');
+  assert.equal(env.calls.created.length, 1, 'фолбэк — новая вкладка пикера');
+  assert.equal(env.calls.created[0].url, APP_URL);
 });
 
 await t('тир 2: без ACAO → captureVisibleTab + кроп; снимок ДО открытия вкладки', async () => {

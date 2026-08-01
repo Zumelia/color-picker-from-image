@@ -10,6 +10,7 @@ export function makeChrome({
   activeTab = null,
   shot = 'data:image/png;base64,SHOT',
   failSetTimes = 0,
+  failUpdate = false,
   execResult = null,
   execError = false,
   captureError = false,
@@ -33,7 +34,7 @@ export function makeChrome({
     runtime: {
       lastError: null,
       getURL: (p) => `chrome-extension://test/${p}`,
-      getManifest: () => ({ version: '0.1.3' }),
+      getManifest: () => ({ version: '0.1.4' }),
       onInstalled: { addListener: (fn) => { handlers.installed = fn; } },
       setUninstallURL: (url, cb) => { calls.uninstallUrl = url; cb && cb(); },
     },
@@ -64,6 +65,7 @@ export function makeChrome({
         return { id: 1000 + calls.created.length };
       },
       update: async (id, o) => {
+        if (failUpdate) throw new Error(`No tab with id: ${id}.`);
         calls.updated.push([id, o]);
         calls.order.push('update');
         return { id };

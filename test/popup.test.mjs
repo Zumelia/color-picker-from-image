@@ -91,8 +91,8 @@ await t('Open picker: вкладки нет → создаётся, попап �
   assert.equal(env.closed, 1);
 });
 
-await t('Open picker: вкладка уже открыта → фокус, дубль не создаётся', async () => {
-  const env = boot({ tabs: [{ id: 5, windowId: 2, url: APP_URL }] });
+await t('Open picker: вкладка уже открыта (pp-picker-tab) → фокус, дубль не создаётся', async () => {
+  const env = boot({ store: { 'pp-picker-tab': { id: 5, windowId: 2 } } });
   await flush();
   click(env, env.doc.getElementById('btn-open'));
   await flush();
@@ -100,6 +100,16 @@ await t('Open picker: вкладка уже открыта → фокус, ду�
   // объекты рождаются в jsdom-релме: сравниваем структуру, не прототипы
   assert.equal(JSON.stringify(env.calls.updated[0]), '[5,{"active":true}]');
   assert.equal(JSON.stringify(env.calls.winUpdated[0]), '[2,{"focused":true}]');
+  assert.equal(env.closed, 1);
+});
+
+await t('Open picker: протухший pp-picker-tab → регистрация забыта, новая вкладка', async () => {
+  const env = boot({ store: { 'pp-picker-tab': { id: 99, windowId: 7 } }, failUpdate: true });
+  await flush();
+  click(env, env.doc.getElementById('btn-open'));
+  await flush();
+  assert.equal(env.state.store['pp-picker-tab'], undefined);
+  assert.equal(env.calls.created[0].url, APP_URL);
   assert.equal(env.closed, 1);
 });
 

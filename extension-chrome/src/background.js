@@ -18,6 +18,7 @@
 const MENU_ID = 'pp-pick-image';
 const APP_PATH = 'src/app.html';
 const K_INCOMING = 'pp-incoming';
+const K_PICKER = 'pp-picker-tab';
 const PROBE_TIMEOUT_MS = 4000;
 
 // Домен продукта: colorpickfromimage.com (куплен 2026-08-01). Слэш в конце
@@ -97,21 +98,26 @@ async function deliver(incoming) {
 
 /**
  * Открывает пикер, переиспользуя уже открытую вкладку: её storage.onChanged
- * съест pp-incoming, и свежесозданная копия осталась бы пустой. Свои страницы
- * видны в tabs.query без permission "tabs".
+ * съест pp-incoming, и свежесозданная копия осталась бы пустой. Ищем по
+ * саморегистрации pp-picker-tab (пишет app.js через tabs.getCurrent):
+ * tabs.query({url}) без permission "tabs" свои страницы не матчит — грабля
+ * 0.1.3, найденная живым тестом. tabs.update по id работает без прав.
  */
 async function openPicker() {
   const url = chrome.runtime.getURL(APP_PATH);
   try {
-    const [existing] = await chrome.tabs.query({ url });
-    if (existing && typeof existing.id === 'number') {
-      await chrome.tabs.update(existing.id, { active: true });
-      if (typeof existing.windowId === 'number') {
-        await chrome.windows.update(existing.windowId, { focused: true });
+    const got = await chrome.storage.local.get({ [K_PICKER]: null });
+    const reg = got[K_PICKER];
+    if (reg && typeof reg.id === 'number') {
+      await chrome.tabs.update(reg.id, { active: true });
+      if (typeof reg.windowId === 'number') {
+        await chrome.windows.update(reg.windowId, { focused: true });
       }
       return;
     }
-  } catch { /* не разглядели своих вкладок — просто откроем новую */ }
+  } catch {
+    try { await chrome.storage.local.remove(K_PICKER); } catch { /* пусть протухает */ }
+  }
   try {
     await chrome.tabs.create({ url });
   } catch { /* дальше падать некуда */ }
