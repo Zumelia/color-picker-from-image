@@ -98,12 +98,13 @@ const store = {
 function clampI(v, lo, hi) { return Math.min(hi, Math.max(lo, v)); }
 
 let toastTimer = 0;
-function toast(msg, isError = false) {
+function toast(msg, isError = false, ms = 0) {
   toastEl.textContent = msg;
   toastEl.classList.toggle('error', isError);
   toastEl.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toastEl.classList.remove('show'), isError ? 2800 : 1500);
+  toastTimer = setTimeout(() => toastEl.classList.remove('show'),
+    ms || (isError ? 2800 : 1500));
 }
 
 async function copyText(text) {
@@ -493,6 +494,16 @@ window.addEventListener('drop', (e) => {
 // ---------------------------------------------------------------- события: контролы
 $('btn-open').addEventListener('click', () => fileInput.click());
 $('btn-browse').addEventListener('click', () => fileInput.click());
+
+// «Grab this page» из вкладки пикера снять ДРУГУЮ вкладку не может: activeTab
+// даёт только жест по иконке на той вкладке, а прав tabs/host у нас нет
+// (сознательно — ноль предупреждений при установке). Кнопка обучает жесту.
+const btnGrab = $('btn-grab');
+if (hasChrome && chrome.tabs?.captureVisibleTab) btnGrab.hidden = false;
+btnGrab.addEventListener('click', () => {
+  toast('Grab lives in the toolbar: open the page’s tab, click the extension icon, then “Grab this page”. This tab can only see itself.',
+    false, 5200);
+});
 fileInput.addEventListener('change', () => {
   const f = fileInput.files?.[0];
   if (f) loadBlob(f, f.name);

@@ -16,6 +16,10 @@
   const K_INCOMING = 'pp-incoming';
   const APP_URL = 'app.html';         // относительный путь: попап и пикер лежат рядом в src/
 
+  // Заполнить при публикации: https://chromewebstore.google.com/detail/<id>/reviews
+  // Пустая строка = кнопка спрятана (вести в никуда хуже, чем не вести — правило пилота)
+  const RATE_URL = '';
+
   const $ = (id) => document.getElementById(id);
   const historyEl = $('history');
   const historyHint = $('historyHint');
@@ -133,6 +137,12 @@
     renderHistory([]);
     setStatus('History cleared');
   });
+
+  if (RATE_URL) {
+    const rate = $('link-rate');
+    rate.href = RATE_URL;
+    rate.hidden = false;
+  }
 
   // пик в открытой вкладке пикера сразу виден в попапе
   if (hasChrome) {

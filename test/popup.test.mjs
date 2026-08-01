@@ -141,6 +141,21 @@ await t('Clear: история пустеет в storage и в DOM', async () =>
   assert.equal(env.doc.getElementById('historyHint').hidden, false);
 });
 
+await t('служебные ссылки: Website/GitHub в новом окне, Rate us спрятан до публикации', async () => {
+  const env = boot();
+  await flush();
+  const site = env.doc.getElementById('link-website');
+  const gh = env.doc.getElementById('link-github');
+  const rate = env.doc.getElementById('link-rate');
+  assert.ok(site.getAttribute('href').startsWith('https://colorpickfromimage.com/'));
+  assert.equal(gh.getAttribute('href'), 'https://github.com/Zumelia/color-picker-from-image');
+  for (const a of [site, gh]) {
+    assert.equal(a.getAttribute('target'), '_blank', 'внешняя ссылка обязана открываться в новом окне');
+    assert.equal(a.getAttribute('rel'), 'noopener');
+  }
+  assert.equal(rate.hidden, true, 'Rate us не должен вести в никуда до публикации');
+});
+
 await t('storage.onChanged: пик в открытом пикере сразу виден в попапе', async () => {
   const env = boot();
   await flush();
