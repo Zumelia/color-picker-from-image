@@ -166,7 +166,10 @@ chrome.runtime.onInstalled.addListener((details) => {
   }
   if (UNINSTALL_URL) {
     try {
-      chrome.runtime.setUninstallURL(UNINSTALL_URL, () => void chrome.runtime.lastError);
+      // ?v= попадает в поле «Extension version» опроса на странице uninstall
+      const v = chrome.runtime.getManifest().version;
+      chrome.runtime.setUninstallURL(`${UNINSTALL_URL}?v=${v}`,
+        () => void chrome.runtime.lastError);
     } catch { /* ignore */ }
   }
 });
