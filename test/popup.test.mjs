@@ -131,6 +131,18 @@ await t('Grab на защищённой вкладке: честная ошиб�
   assert.equal(env.closed, 0);
 });
 
+await t('Grab при квоте storage: честная ошибка про размер, а не «can’t be captured»', async () => {
+  // jsdom не декодирует dataUrl → даунскейл честно сдаётся, остаётся сообщение
+  const env = boot({ activeTab: { id: 9, title: 'Big Page' }, failSetTimes: 1 });
+  await flush();
+  click(env, env.doc.getElementById('btn-grab'));
+  await flush(1200);
+  const status = env.doc.getElementById('status').textContent;
+  assert.ok(status.includes('too large'), `ожидали «too large», получили: ${status}`);
+  assert.ok(!status.includes('can’t be captured'), 'квота не должна маскироваться под запрет захвата');
+  assert.equal(env.state.store['pp-incoming'], undefined);
+});
+
 await t('Clear: история пустеет в storage и в DOM', async () => {
   const env = boot({ store: { 'pp-history': [{ hex: '#123456' }] } });
   await flush();

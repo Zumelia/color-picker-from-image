@@ -50,6 +50,33 @@
     },
   };
 
+  /**
+   * Ужимает PNG-dataUrl до квоты storage.local (10 МБ): на retina-мониторах
+   * (DPR 2+) снимок вкладки в base64 может не влезать. Несколько шагов ×0.75;
+   * не вышло — null, вызывающий покажет честную ошибку.
+   */
+  async function shrinkDataUrl(dataUrl, tries) {
+    const LIMIT = 9_000_000;
+    let src = dataUrl;
+    for (let i = 0; i < tries; i++) {
+      const img = await new Promise((resolve) => {
+        const im = new Image();
+        const timer = setTimeout(() => resolve(null), 800);
+        im.onload = () => { clearTimeout(timer); resolve(im); };
+        im.onerror = () => { clearTimeout(timer); resolve(null); };
+        im.src = src;
+      });
+      if (!img || !img.naturalWidth) return null;
+      const c = document.createElement('canvas');
+      c.width = Math.max(1, Math.round(img.naturalWidth * 0.75));
+      c.height = Math.max(1, Math.round(img.naturalHeight * 0.75));
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      src = c.toDataURL('image/png');
+      if (src.length < LIMIT) return src;
+    }
+    return null;
+  }
+
   let statusTimer = 0;
   function setStatus(msg, isError = false) {
     statusEl.textContent = msg;
@@ -136,12 +163,22 @@
         const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
         if (tab?.title) label = tab.title;
       } catch { /* без title обойдёмся */ }
-      await store.set({ [K_INCOMING]: { kind: 'dataurl', src: dataUrl, label } });
+      try {
+        await store.set({ [K_INCOMING]: { kind: 'dataurl', src: dataUrl, label } });
+      } catch {
+        // квота storage.local: retina-снимок не влез — ужимаем и пробуем ещё раз
+        const scaled = await shrinkDataUrl(dataUrl, 3);
+        if (!scaled) {
+          setStatus('The snapshot is too large to hand over — try a smaller browser window', true);
+          return;
+        }
+        await store.set({ [K_INCOMING]: { kind: 'dataurl', src: scaled, label } });
+      }
       openPicker();
-    } catch {
+    } catch (e) {
       // chrome://, страницы CWS и другие защищённые вкладки снять нельзя —
-      // говорим честно, а не молчим (SPEC: «никогда не падает молча»)
-      setStatus('This page can’t be captured — try a site whose address starts with http:// or https://', true);
+      // говорим честно и НАЗЫВАЕМ причину (диагностика «не сработало»)
+      setStatus(`This page can’t be captured — try a site whose address starts with http:// or https:// (${(e && e.message) || e})`, true);
     }
   });
 
