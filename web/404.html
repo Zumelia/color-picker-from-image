@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Page not found — Color Picker from Image</title>
+<meta name="description" content="This page does not exist.">
+<link rel="canonical" href="https://colorpickfromimage.com/404.html">
+<meta name="robots" content="noindex,follow">
+<link rel="icon" href="/assets/favicon.png?v=1" type="image/png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=1">
+<link rel="stylesheet" href="/assets/fonts.css?v=1">
+<link rel="stylesheet" href="/assets/site.css?v=1">
+<script>try{var t=localStorage.getItem('cpfi-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<header class="hdr">
+  <div class="wrap">
+    <div class="hdr-in">
+      <a class="logo" href="/"><span class="mark"><i><b></b></i></span> Color Picker from Image</a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#pick">Try it</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="https://github.com/Zumelia/color-picker-from-image" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <span class="spacer"></span>
+      <div class="hdr-actions">
+        <button class="icon-btn" data-theme-toggle aria-label="Switch theme">☾</button>
+        <a class="btn btn-sm" data-cta href="/welcome/"><span class="ring"></span>Add to Chrome</a>
+      </div>
+    </div>
+  </div>
+</header>
+<main id="main" style="min-height:60vh">
+<section class="wrap hero" style="padding:110px 0 80px">
+  <h1 style="font-size:46px">This page doesn't exist</h1>
+  <p class="sub">The picker, however, does.</p>
+  <div class="cta-row">
+    <a class="btn btn-ghost" href="/">Back to the picker</a>
+    <a class="btn btn-ghost" href="https://github.com/Zumelia/color-picker-from-image" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</section></main>
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-cols">
+      <div>
+        <a class="logo" href="/"><span class="mark"><i><b></b></i></span> Color Picker from Image</a>
+        <p class="tagline">A color picker that reads your file, right here in the browser.</p>
+      </div>
+      <div><h4>Product</h4><ul>
+        <li><a href="https://github.com/Zumelia/color-picker-from-image" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="/privacy/">Privacy</a></li>
+        <li><a href="/feedback/">Feedback</a></li>
+      </ul></div>
+      <div><h4>Contact</h4><ul>
+        <li><a href="mailto:hello@zumelia.com">hello@zumelia.com</a></li>
+      </ul></div>
+    </div>
+    <div class="foot-bottom">
+      <span>Built by <a href="https://zumelia.com" target="_blank" rel="noopener">Zumelia</a> · © 2026</span>
+      <span class="spacer"></span>
+      <button class="mini icon-btn" data-theme-toggle aria-label="Switch theme">☾</button>
+    </div>
+  </div>
+</footer>
+<script>
+for (const b of document.querySelectorAll('[data-theme-toggle]')) b.addEventListener('click', () => {
+  const cur = document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem('cpfi-theme', next); } catch (e) {}
+});
+</script>
+
+</body>
+</html>

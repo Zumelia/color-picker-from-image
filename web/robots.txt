@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /video-demo/
+Sitemap: https://colorpickfromimage.com/sitemap.xml

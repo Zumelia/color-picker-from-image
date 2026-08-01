@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy Policy — Color Picker from Image</title>
+<meta name="description" content="Color Picker from Image does not collect your data. The images you open never leave your device.">
+<link rel="canonical" href="https://colorpickfromimage.com/privacy/">
+<meta name="robots" content="index,follow">
+<link rel="icon" href="/assets/favicon.png?v=1" type="image/png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=1">
+<link rel="stylesheet" href="/assets/fonts.css?v=1">
+<link rel="stylesheet" href="/assets/site.css?v=1">
+<script>try{var t=localStorage.getItem('cpfi-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<header class="hdr">
+  <div class="wrap">
+    <div class="hdr-in">
+      <a class="logo" href="/"><span class="mark"><i><b></b></i></span> Color Picker from Image</a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#pick">Try it</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="https://github.com/Zumelia/color-picker-from-image" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <span class="spacer"></span>
+      <div class="hdr-actions">
+        <button class="icon-btn" data-theme-toggle aria-label="Switch theme">☾</button>
+        <a class="btn btn-sm" data-cta href="/welcome/"><span class="ring"></span>Add to Chrome</a>
+      </div>
+    </div>
+  </div>
+</header>
+<main id="main" style="min-height:60vh">
+<section class="wrap section" style="max-width:720px;padding-top:56px">
+  <h1 style="font-family:var(--disp);font-size:36px;letter-spacing:-.02em;margin:0 0 18px">Privacy Policy</h1>
+  <div style="line-height:1.7;color:var(--text)">
+  <style>main h2{font-family:var(--disp);font-size:21px;margin:26px 0 8px} main code{background:var(--chip);padding:1px 6px;border-radius:5px;font-size:14px} main li{margin:6px 0} main p{color:var(--muted)}</style>
+  
+_Last updated: 2026-08-01_
+<p>
+<b>Color Picker from Image does not collect your data. The images you open never
+leave your device.</b>
+<p>
+<h2>Data we collect</h2>
+<p>
+None from inside the extension. It does not read, transmit, sell, or share the
+images you open or the colors you pick. There is no telemetry, no crash
+reporting, and no identifiers tied to you.
+<p>
+<h2>What the extension can access, and why</h2>
+<p>
+<ul><li><b>Images you open, paste or drop</b> — decoded and read <b>in your browser, on a</li></ul>
+  local canvas</b>, only so the picker can show you the pixels and their values.
+  Nothing is uploaded anywhere; there is no server side at all.
+<ul><li><b>Local storage (<code>storage</code> permission)</b> — used only to keep your pick</li></ul>
+  history (up to 50 colors) and your own settings (such as auto-copy). This
+  never leaves your device.
+<ul><li><b>The active tab, only when you ask (<code>activeTab</code> + <code>scripting</code>)</b> — when you</li></ul>
+  click &quot;Grab this page&quot; or right-click a picture and choose &quot;Pick color from
+  this image&quot;, the extension takes a snapshot of the visible tab or reads that
+  one image, opens the result in the picker, and forgets the page. It cannot
+  see your other tabs and does nothing until you invoke it.
+<ul><li><b>A context-menu item (<code>contextMenus</code> permission)</b> — adds the single</li></ul>
+  &quot;Pick color from this image&quot; entry to the right-click menu on images.
+<p>
+There are <b>no host permissions</b>: the extension cannot read or change
+websites on its own, and nothing runs in the background while you browse.
+<p>
+<h2>Network</h2>
+<p>
+<b>The extension itself makes no network requests.</b> Its code contains no
+<code>fetch</code>, <code>XMLHttpRequest</code>, <code>sendBeacon</code>, tracking pixels, or remote scripts —
+you can verify this in the open-source code. Every color is computed locally.
+<p>
+There are exactly two moments when your browser opens one of our ordinary web
+pages in a tab:
+<p>
+<ul><li><b>Right after you install</b>, a short welcome page opens explaining where to</li></ul>
+  find the extension and how to pin it.
+<ul><li><b>Right after you uninstall</b>, Chrome opens a one-question feedback page</li></ul>
+  asking why you removed it. Answering is entirely optional.
+<p>
+Those are normal web pages. Like most websites they may count anonymous page
+views so we know how many people installed or removed the extension. They do
+not receive any of your images, browsing history, or personal information.
+<p>
+<h2>Contact</h2>
+<p>
+Questions about this policy: <b>hello@zumelia.com</b>
+
+  </div>
+</section></main>
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-cols">
+      <div>
+        <a class="logo" href="/"><span class="mark"><i><b></b></i></span> Color Picker from Image</a>
+        <p class="tagline">A color picker that reads your file, right here in the browser.</p>
+      </div>
+      <div><h4>Product</h4><ul>
+        <li><a href="https://github.com/Zumelia/color-picker-from-image" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="/privacy/">Privacy</a></li>
+        <li><a href="/feedback/">Feedback</a></li>
+      </ul></div>
+      <div><h4>Contact</h4><ul>
+        <li><a href="mailto:hello@zumelia.com">hello@zumelia.com</a></li>
+      </ul></div>
+    </div>
+    <div class="foot-bottom">
+      <span>Built by <a href="https://zumelia.com" target="_blank" rel="noopener">Zumelia</a> · © 2026</span>
+      <span class="spacer"></span>
+      <button class="mini icon-btn" data-theme-toggle aria-label="Switch theme">☾</button>
+    </div>
+  </div>
+</footer>
+<script>
+for (const b of document.querySelectorAll('[data-theme-toggle]')) b.addEventListener('click', () => {
+  const cur = document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem('cpfi-theme', next); } catch (e) {}
+});
+</script>
+
+</body>
+</html>

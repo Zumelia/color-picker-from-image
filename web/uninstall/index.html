@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sorry to see you go — Color Picker from Image</title>
+<meta name="description" content="Tell us why you removed Color Picker from Image. One click, and it actually gets read.">
+<link rel="canonical" href="https://colorpickfromimage.com/uninstall/">
+<meta name="robots" content="noindex,follow">
+<link rel="icon" href="/assets/favicon.png?v=1" type="image/png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=1">
+<link rel="stylesheet" href="/assets/fonts.css?v=1">
+<link rel="stylesheet" href="/assets/site.css?v=1">
+<script>try{var t=localStorage.getItem('cpfi-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<header class="hdr">
+  <div class="wrap">
+    <div class="hdr-in">
+      <a class="logo" href="/"><span class="mark"><i><b></b></i></span> Color Picker from Image</a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#pick">Try it</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="https://github.com/Zumelia/color-picker-from-image" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <span class="spacer"></span>
+      <div class="hdr-actions">
+        <button class="icon-btn" data-theme-toggle aria-label="Switch theme">☾</button>
+        <a class="btn btn-sm" data-cta href="/welcome/"><span class="ring"></span>Add to Chrome</a>
+      </div>
+    </div>
+  </div>
+</header>
+<main id="main" style="min-height:60vh">
+<section class="wrap section" style="max-width:720px;padding-top:56px">
+  <h1 style="font-family:var(--disp);font-size:36px;letter-spacing:-.02em;margin:0 0 8px">Sorry to see you go</h1>
+  <p style="color:var(--muted);margin:0 0 26px">If something was wrong, one click tells us what. No account, and no reply unless you ask for one.</p>
+  <form id="f" class="bcard" style="gap:16px" action="https://formspree.io/f/mwvgrkov" method="post">
+    <input type="hidden" name="_subject" value="colorpickfromimage.com: Uninstall">
+    <input type="hidden" name="Page" id="h-page" value="">
+    <input type="hidden" name="Browser" id="h-browser" value="">
+    <input type="hidden" name="Extension version" id="h-version" value="">
+    <fieldset style="border:0;margin:0;padding:0">
+      <legend style="font-weight:700;margin-bottom:12px">Why did you remove it?</legend>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label class="perm" style="cursor:pointer"><input type="radio" name="Reason" value="I expected it to pick colors from web pages directly" required style="accent-color:var(--coral)"> I expected it to pick colors from web pages directly</label>
+        <label class="perm" style="cursor:pointer"><input type="radio" name="Reason" value="Didn't work / nothing happened" style="accent-color:var(--coral)"> Didn't work / nothing happened</label>
+        <label class="perm" style="cursor:pointer"><input type="radio" name="Reason" value="Copy to clipboard didn't work" style="accent-color:var(--coral)"> Copy to clipboard didn't work</label>
+        <label class="perm" style="cursor:pointer"><input type="radio" name="Reason" value="Missing a feature I needed" style="accent-color:var(--coral)"> Missing a feature I needed</label>
+        <label class="perm" style="cursor:pointer"><input type="radio" name="Reason" value="Found something better" style="accent-color:var(--coral)"> Found something better</label>
+        <label class="perm" style="cursor:pointer"><input type="radio" name="Reason" value="Installed it by mistake" style="accent-color:var(--coral)"> Installed it by mistake</label>
+        <label class="perm" style="cursor:pointer"><input type="radio" name="Reason" value="Something else" style="accent-color:var(--coral)"> Something else</label>
+      </div>
+    </fieldset>
+    <div><label for="c" style="display:block;font-weight:700;margin-bottom:6px">Anything else? <span style="color:var(--faint);font-weight:400;font-size:13px">optional</span></label>
+    <textarea id="c" name="Comment" rows="4" placeholder="What went wrong?" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);font:inherit"></textarea></div>
+    <div><label for="e" style="display:block;font-weight:700;margin-bottom:6px">Email <span style="color:var(--faint);font-weight:400;font-size:13px">optional — only if you want an answer</span></label>
+    <input id="e" type="email" name="email" placeholder="you@example.com" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);font:inherit"></div>
+    <div style="display:flex;align-items:center;gap:14px">
+      <button class="btn" type="submit" style="border:0;cursor:pointer">Send</button>
+      <span style="color:var(--faint);font-size:13px">Goes straight to the person who wrote the code.</span>
+    </div>
+  </form>
+  <div id="ok" class="bcard" tabindex="-1" hidden style="margin-top:20px">
+    <h2 style="margin:0;font-family:var(--disp);font-size:22px">Thanks — this actually gets read.</h2>
+    <p style="color:var(--muted);margin:0">If it was a bug or a missing feature, it goes on the list.</p>
+  </div>
+  <p id="fail" hidden style="color:#C0392B;margin-top:14px">Couldn't send that — your text is still here. Try again, or open an issue on <a href="https://github.com/Zumelia/color-picker-from-image" target="_blank" rel="noopener">GitHub</a>.</p>
+</section></main>
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-cols">
+      <div>
+        <a class="logo" href="/"><span class="mark"><i><b></b></i></span> Color Picker from Image</a>
+        <p class="tagline">A color picker that reads your file, right here in the browser.</p>
+      </div>
+      <div><h4>Product</h4><ul>
+        <li><a href="https://github.com/Zumelia/color-picker-from-image" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="/privacy/">Privacy</a></li>
+        <li><a href="/feedback/">Feedback</a></li>
+      </ul></div>
+      <div><h4>Contact</h4><ul>
+        <li><a href="mailto:hello@zumelia.com">hello@zumelia.com</a></li>
+      </ul></div>
+    </div>
+    <div class="foot-bottom">
+      <span>Built by <a href="https://zumelia.com" target="_blank" rel="noopener">Zumelia</a> · © 2026</span>
+      <span class="spacer"></span>
+      <button class="mini icon-btn" data-theme-toggle aria-label="Switch theme">☾</button>
+    </div>
+  </div>
+</footer>
+<script>
+for (const b of document.querySelectorAll('[data-theme-toggle]')) b.addEventListener('click', () => {
+  const cur = document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem('cpfi-theme', next); } catch (e) {}
+});
+</script>
+<script>
+document.getElementById('h-page').value = location.href;
+document.getElementById('h-browser').value = navigator.userAgent;
+document.getElementById('h-version').value = new URLSearchParams(location.search).get('v') || 'unknown';
+var f = document.getElementById('f');
+f.addEventListener('submit', function (e) {
+  e.preventDefault();
+  document.getElementById('fail').hidden = true;
+  fetch(f.action, { method: 'POST', body: new FormData(f), headers: { 'Accept': 'application/json' } })
+    .then(function (r) { if (!r.ok) throw new Error();
+      f.hidden = true; var ok = document.getElementById('ok'); ok.hidden = false; ok.focus();
+    }).catch(function () { document.getElementById('fail').hidden = false; });
+});
+</script>
+</body>
+</html>

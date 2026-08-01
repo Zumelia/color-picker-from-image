@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Welcome — Color Picker from Image</title>
+<meta name="description" content="The extension is installed. Pin it and take your first pick.">
+<link rel="canonical" href="https://colorpickfromimage.com/welcome/">
+<meta name="robots" content="noindex,follow">
+<link rel="icon" href="/assets/favicon.png?v=1" type="image/png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=1">
+<link rel="stylesheet" href="/assets/fonts.css?v=1">
+<link rel="stylesheet" href="/assets/site.css?v=1">
+<script>try{var t=localStorage.getItem('cpfi-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<header class="hdr">
+  <div class="wrap">
+    <div class="hdr-in">
+      <a class="logo" href="/"><span class="mark"><i><b></b></i></span> Color Picker from Image</a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#pick">Try it</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="https://github.com/Zumelia/color-picker-from-image" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <span class="spacer"></span>
+      <div class="hdr-actions">
+        <button class="icon-btn" data-theme-toggle aria-label="Switch theme">☾</button>
+        <a class="btn btn-sm" data-cta href="/welcome/"><span class="ring"></span>Add to Chrome</a>
+      </div>
+    </div>
+  </div>
+</header>
+<main id="main" style="min-height:60vh">
+<section class="wrap hero" style="padding-bottom:24px">
+  <h1 style="font-size:44px">You're all set 🎉</h1>
+  <p class="sub">Color Picker from Image is installed. Three things worth knowing before your first pick.</p>
+</section>
+<section class="wrap section" style="max-width:1000px">
+  <div class="grid3">
+    <div class="bcard"><span class="dot"></span><h3>1 · Pin it</h3><p>Click the puzzle icon in the toolbar, then the pin next to “Color Picker from Image”. One click from any tab from now on.</p></div>
+    <div class="bcard"><span class="dot"></span><h3>2 · Open the picker</h3><p>Click the icon → “Open picker”. Drop an image, press Ctrl+V, or browse — hover, click, and the HEX is copied.</p></div>
+    <div class="bcard"><span class="dot"></span><h3>3 · Pick from pages</h3><p>“Grab this page” in the popup captures the tab you're on. Or right-click any picture → “Pick color from this image”.</p></div>
+  </div>
+  <div class="sec-cta" style="gap:14px;display:flex;justify-content:center">
+    <a class="btn btn-ghost" href="/#pick">Try the web picker</a>
+  </div>
+</section></main>
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-cols">
+      <div>
+        <a class="logo" href="/"><span class="mark"><i><b></b></i></span> Color Picker from Image</a>
+        <p class="tagline">A color picker that reads your file, right here in the browser.</p>
+      </div>
+      <div><h4>Product</h4><ul>
+        <li><a href="https://github.com/Zumelia/color-picker-from-image" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="/privacy/">Privacy</a></li>
+        <li><a href="/feedback/">Feedback</a></li>
+      </ul></div>
+      <div><h4>Contact</h4><ul>
+        <li><a href="mailto:hello@zumelia.com">hello@zumelia.com</a></li>
+      </ul></div>
+    </div>
+    <div class="foot-bottom">
+      <span>Built by <a href="https://zumelia.com" target="_blank" rel="noopener">Zumelia</a> · © 2026</span>
+      <span class="spacer"></span>
+      <button class="mini icon-btn" data-theme-toggle aria-label="Switch theme">☾</button>
+    </div>
+  </div>
+</footer>
+<script>
+for (const b of document.querySelectorAll('[data-theme-toggle]')) b.addEventListener('click', () => {
+  const cur = document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem('cpfi-theme', next); } catch (e) {}
+});
+</script>
+
+</body>
+</html>
