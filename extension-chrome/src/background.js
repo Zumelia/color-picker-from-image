@@ -20,11 +20,11 @@ const APP_PATH = 'src/app.html';
 const K_INCOMING = 'pp-incoming';
 const PROBE_TIMEOUT_MS = 4000;
 
-// Домен продукта решается при подаче (products/_core/LAUNCH.md). Пустая строка =
-// выключено; механика пилота уже на месте: welcome открывается только на
-// install, uninstall-URL ставится на install И update (после апдейта слетает).
-const WELCOME_URL = '';
-const UNINSTALL_URL = '';
+// Домен продукта: colorpickfromimage.com (куплен 2026-08-01). Слэш в конце
+// обязателен — без него nginx добавляет лишний 301. Welcome открывается только
+// на install; uninstall-URL ставится на install И update (после апдейта слетает).
+const WELCOME_URL = 'https://colorpickfromimage.com/welcome/';
+const UNINSTALL_URL = 'https://colorpickfromimage.com/uninstall/';
 
 /**
  * Выполняется В СТРАНИЦЕ (chrome.scripting сериализует функцию: никаких

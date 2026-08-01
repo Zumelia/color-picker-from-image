@@ -26,7 +26,10 @@ function boot(opts) {
   return env;
 }
 
-await t('onInstalled(install): меню пересоздано, welcome/uninstall выключены до домена', async () => {
+const WELCOME = 'https://colorpickfromimage.com/welcome/';
+const UNINSTALL = 'https://colorpickfromimage.com/uninstall/';
+
+await t('onInstalled(install): меню пересоздано, welcome открыт, uninstall-URL стоит', async () => {
   const { handlers, calls } = boot();
   handlers.installed({ reason: 'install' });
   await flush();
@@ -34,16 +37,18 @@ await t('onInstalled(install): меню пересоздано, welcome/uninstal
   assert.equal(calls.menus.length, 1);
   assert.equal(calls.menus[0].id, 'pp-pick-image');
   assert.deepEqual(calls.menus[0].contexts, ['image']);
-  assert.equal(calls.created.length, 0, 'welcome не должен открываться: WELCOME_URL пуст');
-  assert.equal(calls.uninstallUrl, null, 'UNINSTALL_URL пуст — setUninstallURL не зовём');
+  assert.equal(calls.created.length, 1, 'welcome открывается ровно один раз');
+  assert.equal(calls.created[0].url, WELCOME);
+  assert.equal(calls.uninstallUrl, UNINSTALL);
 });
 
-await t('onInstalled(update): меню пересоздано, welcome НЕ открывается', async () => {
+await t('onInstalled(update): меню пересоздано, welcome НЕ открывается, uninstall-URL переставлен', async () => {
   const { handlers, calls } = boot();
   handlers.installed({ reason: 'update' });
   await flush();
   assert.equal(calls.menus.length, 1);
-  assert.equal(calls.created.length, 0);
+  assert.equal(calls.created.length, 0, 'welcome только на install');
+  assert.equal(calls.uninstallUrl, UNINSTALL, 'после апдейта URL слетает — ставим заново');
 });
 
 await t('тир 1: ACAO есть → kind:dataurl, снимок не снимается, вкладка открыта', async () => {
