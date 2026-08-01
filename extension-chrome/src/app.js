@@ -414,20 +414,34 @@ const KEY_DELTA = {
   ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1],
 };
 document.addEventListener('keydown', (e) => {
-  if (!imageData || !pos) return;
+  if (!imageData) return;
   // не перехватываем клавиатуру у контролов (Enter на кнопке — это кнопка)
   if (e.target instanceof Element && e.target.closest('button, input, select, textarea, a')) return;
   const d = KEY_DELTA[e.key];
   if (d) {
     e.preventDefault();
+    if (!pos) {
+      // после Esc стрелка возвращает прицел в центр — клавиатура не «умирает»
+      setPos({ x: Math.floor(natural.w / 2), y: Math.floor(natural.h / 2) });
+      return;
+    }
     const step = e.ctrlKey || e.altKey || e.metaKey ? 10 : 1;
     setPos({
       x: clampI(pos.x + d[0] * step, 0, natural.w - 1),
       y: clampI(pos.y + d[1] * step, 0, natural.h - 1),
     });
   } else if (e.key === 'Enter') {
+    if (!pos) return;
     e.preventDefault();
     pickAt(pos);
+  } else if (e.key === 'Escape') {
+    // Esc убирает прицел и лупу (паритет с веб-версией на сайте)
+    e.preventDefault();
+    pos = null;
+    marker.hidden = true;
+    loupe.hidden = true;
+    statPos.textContent = '';
+    statHoverWrap.hidden = true;
   }
 });
 
