@@ -73,6 +73,16 @@ h1 b { font-weight: 800; }
   white-space: nowrap;
 }
 .btn:hover { border-color: var(--pp-accent); color: var(--pp-accent); }
+/* подсветка по сигналу из пикера (pp-highlight-grab) */
+.btn.attn {
+  border-color: var(--pp-accent);
+  color: var(--pp-accent);
+  animation: pp-attn 1s ease-in-out 3;
+}
+@keyframes pp-attn {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(242, 109, 91, 0); }
+  50% { box-shadow: 0 0 0 6px rgba(242, 109, 91, 0.3); }
+}
 .btn.primary { background: var(--pp-accent); border-color: var(--pp-accent); color: var(--pp-accent-ink); }
 .btn.primary:hover { filter: brightness(0.94); color: var(--pp-accent-ink); }
 .link {

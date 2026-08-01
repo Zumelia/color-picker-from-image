@@ -497,11 +497,23 @@ $('btn-browse').addEventListener('click', () => fileInput.click());
 
 // «Grab this page» из вкладки пикера снять ДРУГУЮ вкладку не может: activeTab
 // даёт только жест по иконке на той вкладке, а прав tabs/host у нас нет
-// (сознательно — ноль предупреждений при установке). Кнопка обучает жесту.
+// (сознательно — ноль предупреждений при установке). Поэтому кнопка открывает
+// попап расширения и подсвечивает в нём настоящий Grab (сигнал —
+// pp-highlight-grab в storage; попап забирает и удаляет ключ). Для Chrome
+// без action.openPopup (до 127-й) — фолбэк-подсказка тостом.
 const btnGrab = $('btn-grab');
 if (hasChrome && chrome.tabs?.captureVisibleTab) btnGrab.hidden = false;
-btnGrab.addEventListener('click', () => {
-  toast('Grab lives in the toolbar: open the page’s tab, click the extension icon, then “Grab this page”. This tab can only see itself.',
+btnGrab.addEventListener('click', async () => {
+  if (hasChrome && chrome.action?.openPopup) {
+    try {
+      await store.set({ 'pp-highlight-grab': true });
+      await chrome.action.openPopup();
+      return;
+    } catch {
+      await store.remove('pp-highlight-grab');
+    }
+  }
+  toast('Grab lives in the toolbar: open the page’s tab, click the extension icon, then “Grab this page”.',
     false, 5200);
 });
 fileInput.addEventListener('change', () => {

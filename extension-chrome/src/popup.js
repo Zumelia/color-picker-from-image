@@ -14,6 +14,7 @@
 (() => {
   const K_HISTORY = 'pp-history';
   const K_INCOMING = 'pp-incoming';
+  const K_HIGHLIGHT = 'pp-highlight-grab';  // сигнал из пикера: подсветить Grab
   const APP_URL = 'app.html';         // относительный путь: попап и пикер лежат рядом в src/
 
   // Заполнить при публикации: https://chromewebstore.google.com/detail/<id>/reviews
@@ -42,6 +43,10 @@
     async set(items) {
       if (hasChrome) return chrome.storage.local.set(items);
       for (const [k, v] of Object.entries(items)) localStorage.setItem(k, JSON.stringify(v));
+    },
+    async remove(key) {
+      if (hasChrome) return chrome.storage.local.remove(key);
+      localStorage.removeItem(key);
     },
   };
 
@@ -114,6 +119,14 @@
       return;
     }
     try {
+      // не снимаем сам пикер: попап могли открыть из его вкладки
+      const [active] = await chrome.tabs.query({ active: true, currentWindow: true });
+      if (active?.url && active.url.startsWith(chrome.runtime.getURL(''))) {
+        setStatus('This is the picker itself — switch to the page you want, then click the icon.', true);
+        return;
+      }
+    } catch { /* url не виден — обычная вкладка, продолжаем */ }
+    try {
       // PNG без сжатия с потерями: пикер обязан читать истинные пиксели.
       // Снимаем ДО открытия новой вкладки — активной должна быть целевая.
       const dataUrl = await chrome.tabs.captureVisibleTab();
@@ -143,6 +156,17 @@
     rate.href = RATE_URL;
     rate.hidden = false;
   }
+
+  // пикер попросил подсветить Grab (кнопка в его шапке) — заберём сигнал
+  (async () => {
+    const got = await store.get({ [K_HIGHLIGHT]: false });
+    if (!got[K_HIGHLIGHT]) return;
+    await store.remove(K_HIGHLIGHT);
+    const grab = $('btn-grab');
+    grab.classList.add('attn');
+    setStatus('“Grab this page” captures the tab under this popup — switch to the page you need first.');
+    setTimeout(() => grab.classList.remove('attn'), 4000);
+  })();
 
   // пик в открытой вкладке пикера сразу виден в попапе
   if (hasChrome) {

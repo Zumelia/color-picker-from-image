@@ -156,6 +156,25 @@ await t('служебные ссылки: Website/GitHub в новом окне,
   assert.equal(rate.hidden, true, 'Rate us не должен вести в никуда до публикации');
 });
 
+await t('сигнал pp-highlight-grab: кнопка подсвечена, ключ съеден', async () => {
+  const env = boot({ store: { 'pp-highlight-grab': true } });
+  await flush();
+  assert.ok(env.doc.getElementById('btn-grab').classList.contains('attn'));
+  assert.equal(env.state.store['pp-highlight-grab'], undefined, 'сигнал одноразовый');
+  assert.ok(env.doc.getElementById('status').textContent.includes('switch to the page'));
+});
+
+await t('Grab на вкладке самого пикера: подсказка вместо снимка себя', async () => {
+  const env = boot({ activeTab: { id: 3, url: APP_URL, title: 'Picker' } });
+  await flush();
+  click(env, env.doc.getElementById('btn-grab'));
+  await flush();
+  assert.equal(env.calls.captures, 0, 'пикер не должен снимать сам себя');
+  assert.ok(env.doc.getElementById('status').textContent.includes('picker itself'));
+  assert.equal(env.state.store['pp-incoming'], undefined);
+  assert.equal(env.closed, 0);
+});
+
 await t('storage.onChanged: пик в открытом пикере сразу виден в попапе', async () => {
   const env = boot();
   await flush();
