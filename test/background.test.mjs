@@ -27,7 +27,7 @@ function boot(opts) {
 }
 
 const WELCOME = 'https://colorpickfromimage.com/welcome/';
-const UNINSTALL = 'https://colorpickfromimage.com/uninstall/?v=0.1.1';
+const UNINSTALL = 'https://colorpickfromimage.com/uninstall/?v=0.1.2';
 
 await t('onInstalled(install): меню пересоздано, welcome открыт, uninstall-URL стоит', async () => {
   const { handlers, calls } = boot();

@@ -141,7 +141,7 @@
     } catch {
       // chrome://, страницы CWS и другие защищённые вкладки снять нельзя —
       // говорим честно, а не молчим (SPEC: «никогда не падает молча»)
-      setStatus('This page can’t be captured — try a normal website tab', true);
+      setStatus('This page can’t be captured — try a site whose address starts with http:// or https://', true);
     }
   });
 
