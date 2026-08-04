@@ -18,9 +18,9 @@
   const K_PICKER = 'pp-picker-tab';         // саморегистрация вкладки пикера
   const APP_URL = 'app.html';         // относительный путь: попап и пикер лежат рядом в src/
 
-  // Заполнить при публикации: https://chromewebstore.google.com/detail/<id>/reviews
-  // Пустая строка = кнопка спрятана (вести в никуда хуже, чем не вести — правило пилота)
-  const RATE_URL = '';
+  // Страница отзывов листинга (id постоянный, известен с подачи 2026-08-01).
+  // Кнопка Rate us видна, только когда URL заполнен.
+  const RATE_URL = 'https://chromewebstore.google.com/detail/ndcooadfngbpjbaemeeajjdkjmpefbfm/reviews';
 
   const $ = (id) => document.getElementById(id);
   const historyEl = $('history');

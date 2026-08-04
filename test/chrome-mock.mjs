@@ -34,7 +34,7 @@ export function makeChrome({
     runtime: {
       lastError: null,
       getURL: (p) => `chrome-extension://test/${p}`,
-      getManifest: () => ({ version: '0.1.4' }),
+      getManifest: () => ({ version: '0.1.5' }),
       onInstalled: { addListener: (fn) => { handlers.installed = fn; } },
       setUninstallURL: (url, cb) => { calls.uninstallUrl = url; cb && cb(); },
     },
