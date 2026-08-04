@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Changelog — Color Picker from Image</title>
+<meta name="description" content="What changed in each version of Color Picker from Image — new features, fixes and improvements, release by release.">
+<link rel="canonical" href="https://colorpickfromimage.com/changelog/">
+<meta name="robots" content="index,follow">
+<link rel="icon" href="/assets/favicon.png?v=1" type="image/png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=1">
+<link rel="stylesheet" href="/assets/fonts.css?v=1">
+<link rel="stylesheet" href="/assets/site.css?v=1">
+<script>try{var t=localStorage.getItem('cpfi-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<header class="hdr">
+  <div class="wrap">
+    <div class="hdr-in">
+      <a class="logo" href="/"><span class="mark"><i><b></b></i></span> Color Picker from Image</a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#pick">Try it</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="https://github.com/Zumelia/color-picker-from-image" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <span class="spacer"></span>
+      <div class="hdr-actions">
+        <button class="icon-btn" data-theme-toggle aria-label="Switch theme">☾</button>
+        <a class="btn btn-sm" data-cta href="/welcome/"><span class="ring"></span>Add to Chrome</a>
+      </div>
+    </div>
+  </div>
+</header>
+<main id="main" style="min-height:60vh">
+<section class="wrap section" style="max-width:720px;padding-top:56px">
+  <h1 style="font-family:var(--disp);font-size:36px;letter-spacing:-.02em;margin:0 0 10px">Changelog</h1>
+  <style>
+    .log p{color:var(--muted);line-height:1.7}
+    .log .rel{margin:34px 0 0;padding-top:26px;border-top:1px solid var(--chip)}
+    .log .rel:first-of-type{margin-top:18px;padding-top:0;border-top:0}
+    .log h2{font-family:var(--disp);font-size:22px;letter-spacing:-.01em;margin:0 0 4px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+    .log h2 .date{font-family:inherit;font-size:14px;font-weight:400;letter-spacing:0;color:var(--muted)}
+    .log ul{margin:10px 0 0;padding-left:20px}
+    .log li{margin:7px 0;color:var(--muted);line-height:1.65}
+    .log li b{color:var(--text);font-weight:600}
+  </style>
+  <div class="log">
+  <p>Every release of the extension, newest first. The full development history
+  is public in the <a href="https://github.com/Zumelia/color-picker-from-image/commits/main" target="_blank" rel="noopener">open-source repository</a>.</p>
+
+  <div class="rel">
+    <h2>0.1.6 <span class="date">August 4, 2026</span></h2>
+    <ul>
+      <li><b>Shorter name.</b> The extension is now called simply
+        &quot;Color Picker from Image&quot; in every language — no subtitle after it.</li>
+    </ul>
+  </div>
+
+  <div class="rel">
+    <h2>0.1.5 <span class="date">August 4, 2026</span></h2>
+    <ul>
+      <li><b>Rate us.</b> The popup links straight to the extension's
+        Chrome Web Store reviews page.</li>
+    </ul>
+  </div>
+
+  <div class="rel">
+    <h2>0.1.4 <span class="date">August 1, 2026</span></h2>
+    <ul>
+      <li><b>Fixed:</b> &quot;Grab this page&quot; and right-click picking could open a
+        blank second picker tab while the grabbed image landed in an old one.
+        The picker tab is now reused reliably.</li>
+    </ul>
+  </div>
+
+  <div class="rel">
+    <h2>0.1.3 <span class="date">August 1, 2026</span></h2>
+    <ul>
+      <li><b>Fixed:</b> on high-resolution displays &quot;Grab this page&quot; could fail
+        because the screenshot was too big to hand over to the picker. Oversized
+        screenshots are now scaled down automatically.</li>
+      <li>Capture errors show what actually went wrong instead of a generic message.</li>
+    </ul>
+  </div>
+
+  <div class="rel">
+    <h2>0.1.2 <span class="date">August 1, 2026</span></h2>
+    <ul>
+      <li>Clearer message on protected pages: grabbing works on regular websites
+        whose address starts with http or https.</li>
+    </ul>
+  </div>
+
+  <div class="rel">
+    <h2>0.1.1 <span class="date">August 1, 2026</span></h2>
+    <ul>
+      <li><b>&quot;Grab this page&quot; from the picker.</b> The hint in the picker header
+        opens the extension popup with the real Grab button highlighted.</li>
+      <li>Website, Rate us and GitHub links in the popup.</li>
+      <li><b>Esc</b> clears the crosshair; any arrow key brings it back centered.</li>
+    </ul>
+  </div>
+
+  <div class="rel">
+    <h2>0.1.0 <span class="date">August 1, 2026</span></h2>
+    <ul>
+      <li><b>First release.</b> Open, drop or paste (Ctrl+V) an image and pick
+        any pixel from it.</li>
+      <li>Zoom loupe with a pixel grid; arrow keys move 1&nbsp;px (Ctrl — 10&nbsp;px),
+        Enter picks.</li>
+      <li>HEX, RGB and HSL with one-click copy, plus optional auto-copy of HEX.</li>
+      <li>Automatic 8-color palette of the image.</li>
+      <li>History of your last 50 colors, kept between sessions.</li>
+      <li>Right-click any picture on a page — &quot;Pick color from this image&quot;.</li>
+      <li>&quot;Grab this page&quot; captures the visible tab as an image.</li>
+      <li>Light and dark themes, 52 languages, works fully offline —
+        no host permissions, no accounts, no tracking.</li>
+    </ul>
+  </div>
+
+  </div>
+</section></main>
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-cols">
+      <div>
+        <a class="logo" href="/"><span class="mark"><i><b></b></i></span> Color Picker from Image</a>
+        <p class="tagline">A color picker that reads your file, right here in the browser.</p>
+      </div>
+      <div><h4>Product</h4><ul>
+        <li><a href="https://github.com/Zumelia/color-picker-from-image" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="/changelog/">Changelog</a></li>
+        <li><a href="/privacy/">Privacy</a></li>
+        <li><a href="/feedback/">Feedback</a></li>
+      </ul></div>
+      <div><h4>Contact</h4><ul>
+        <li><a href="mailto:hello@zumelia.com">hello@zumelia.com</a></li>
+      </ul></div>
+    </div>
+    <div class="foot-bottom">
+      <span>Built by <a href="https://zumelia.com" target="_blank" rel="noopener">Zumelia</a> · © 2026</span>
+      <span class="spacer"></span>
+      <button class="mini icon-btn" data-theme-toggle aria-label="Switch theme">☾</button>
+    </div>
+  </div>
+</footer>
+<script>
+for (const b of document.querySelectorAll('[data-theme-toggle]')) b.addEventListener('click', () => {
+  const cur = document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem('cpfi-theme', next); } catch (e) {}
+});
+</script>
+
+</body>
+</html>
