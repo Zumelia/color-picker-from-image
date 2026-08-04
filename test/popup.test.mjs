@@ -163,7 +163,7 @@ await t('Clear: история пустеет в storage и в DOM', async () =>
   assert.equal(env.doc.getElementById('historyHint').hidden, false);
 });
 
-await t('служебные ссылки: Website/GitHub в новом окне, Rate us спрятан до публикации', async () => {
+await t('служебные ссылки: Website/GitHub/Rate us в новом окне, Rate ведёт в отзывы', async () => {
   const env = boot();
   await flush();
   const site = env.doc.getElementById('link-website');
@@ -171,11 +171,13 @@ await t('служебные ссылки: Website/GitHub в новом окне,
   const rate = env.doc.getElementById('link-rate');
   assert.ok(site.getAttribute('href').startsWith('https://colorpickfromimage.com/'));
   assert.equal(gh.getAttribute('href'), 'https://github.com/Zumelia/color-picker-from-image');
-  for (const a of [site, gh]) {
+  assert.equal(rate.hidden, false, 'item id известен с подачи — кнопка видна');
+  assert.equal(rate.getAttribute('href'),
+    'https://chromewebstore.google.com/detail/ndcooadfngbpjbaemeeajjdkjmpefbfm/reviews');
+  for (const a of [site, gh, rate]) {
     assert.equal(a.getAttribute('target'), '_blank', 'внешняя ссылка обязана открываться в новом окне');
     assert.equal(a.getAttribute('rel'), 'noopener');
   }
-  assert.equal(rate.hidden, true, 'Rate us не должен вести в никуда до публикации');
 });
 
 await t('сигнал pp-highlight-grab: кнопка подсвечена, ключ съеден', async () => {
