@@ -26,7 +26,7 @@
       <span class="spacer"></span>
       <div class="hdr-actions">
         <button class="icon-btn" data-theme-toggle aria-label="Switch theme">☾</button>
-        <a class="btn btn-sm" data-cta href="/welcome/"><span class="ring"></span>Add to Chrome</a>
+        <a class="btn btn-sm" data-cta href="https://chromewebstore.google.com/detail/ndcooadfngbpjbaemeeajjdkjmpefbfm?utm_source=colorpickfromimage.com&amp;utm_medium=site&amp;utm_campaign=header" target="_blank" rel="noopener"><span class="ring"></span>Add to Chrome</a>
       </div>
     </div>
   </div>
@@ -39,6 +39,7 @@
     <input type="hidden" name="_subject" value="colorpickfromimage.com: Feedback">
     <input type="hidden" name="Page" id="h-page" value="">
     <input type="hidden" name="Browser" id="h-browser" value="">
+    <input type="hidden" name="Stars" id="h-stars" value="">
     <div><label style="display:block;font-weight:700;margin-bottom:6px">What is it about?</label>
     <select name="Topic" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);font:inherit">
       <option>A bug</option><option>A missing feature</option><option>A question</option><option>Something else</option>
@@ -68,6 +69,7 @@
       <div><h4>Product</h4><ul>
         <li><a href="https://github.com/Zumelia/color-picker-from-image" target="_blank" rel="noopener">GitHub</a></li>
         <li><a href="/changelog/">Changelog</a></li>
+        <li><a href="/rate/">Rate us</a></li>
         <li><a href="/privacy/">Privacy</a></li>
         <li><a href="/feedback/">Feedback</a></li>
       </ul></div>
@@ -93,6 +95,7 @@ for (const b of document.querySelectorAll('[data-theme-toggle]')) b.addEventList
 <script>
 document.getElementById('h-page').value = location.href;
 document.getElementById('h-browser').value = navigator.userAgent;
+document.getElementById('h-stars').value = new URLSearchParams(location.search).get('stars') || '';
 var f = document.getElementById('f');
 f.addEventListener('submit', function (e) {
   e.preventDefault();

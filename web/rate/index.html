@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rate Color Picker from Image</title>
+<meta name="description" content="Four or five stars go to the Chrome Web Store, one to three come to us privately.">
+<link rel="canonical" href="https://colorpickfromimage.com/rate/">
+<meta name="robots" content="noindex,follow">
+<link rel="icon" href="/assets/favicon.png?v=1" type="image/png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=1">
+<link rel="stylesheet" href="/assets/fonts.css?v=1">
+<link rel="stylesheet" href="/assets/site.css?v=1">
+<script>try{var t=localStorage.getItem('cpfi-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<header class="hdr">
+  <div class="wrap">
+    <div class="hdr-in">
+      <a class="logo" href="/"><span class="mark"><i><b></b></i></span> Color Picker from Image</a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#pick">Try it</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="https://github.com/Zumelia/color-picker-from-image" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <span class="spacer"></span>
+      <div class="hdr-actions">
+        <button class="icon-btn" data-theme-toggle aria-label="Switch theme">☾</button>
+        <a class="btn btn-sm" data-cta href="https://chromewebstore.google.com/detail/ndcooadfngbpjbaemeeajjdkjmpefbfm?utm_source=colorpickfromimage.com&amp;utm_medium=site&amp;utm_campaign=header" target="_blank" rel="noopener"><span class="ring"></span>Add to Chrome</a>
+      </div>
+    </div>
+  </div>
+</header>
+<main id="main" style="min-height:60vh">
+<section class="wrap section" style="padding-top:56px">
+  <style>
+    .rate{max-width:680px;margin:0 auto;text-align:center;padding:44px 26px;
+      border:1px solid var(--line);border-radius:18px;background:var(--card)}
+    .rate h1{font-family:var(--disp);font-size:32px;letter-spacing:-.02em;margin:0 0 10px}
+    .rate .lead{color:var(--muted);margin:0 auto;max-width:52ch;line-height:1.6}
+    .stars{display:inline-flex;gap:6px;margin:20px 0 4px}
+    .star{width:46px;height:46px;border:0;background:transparent;color:var(--line);
+      font-size:32px;line-height:1;cursor:pointer;padding:0;transition:color .1s}
+    .star[data-on="1"]{color:#EDAE49}
+    .rate-label{min-height:24px;color:var(--muted);font-size:14px;margin:0}
+    .rate-actions{display:flex;justify-content:center;gap:12px;margin-top:16px;flex-wrap:wrap}
+    .rate-alt{margin-top:26px;color:var(--muted);font-size:14.5px}
+  </style>
+  <div class="rate">
+    <h1>Using the extension? Rate it.</h1>
+    <p class="lead">Four or five stars go to the Chrome Web Store. One to three come
+      to us privately, where a fix can actually happen.</p>
+    <div id="rate-widget">
+      <div class="stars" role="radiogroup" aria-label="Rate Color Picker from Image">
+        <button class="star" data-star="1" role="radio" aria-checked="false" aria-label="1 star">★</button>
+        <button class="star" data-star="2" role="radio" aria-checked="false" aria-label="2 stars">★</button>
+        <button class="star" data-star="3" role="radio" aria-checked="false" aria-label="3 stars">★</button>
+        <button class="star" data-star="4" role="radio" aria-checked="false" aria-label="4 stars">★</button>
+        <button class="star" data-star="5" role="radio" aria-checked="false" aria-label="5 stars">★</button>
+      </div>
+      <p class="rate-label" id="rate-label"></p>
+      <div class="rate-actions" id="rate-actions" hidden>
+        <a class="btn" id="rate-store" href="https://chromewebstore.google.com/detail/ndcooadfngbpjbaemeeajjdkjmpefbfm/reviews" target="_blank" rel="noopener" hidden>Rate on the Chrome Web Store →</a>
+        <a class="btn btn-ghost" id="rate-form" href="/feedback/" hidden>Tell us what's wrong →</a>
+      </div>
+    </div>
+    <p id="rate-done" hidden></p>
+    <p class="rate-alt">Not ready to rate? <a href="/feedback/">Tell us why</a> instead.</p>
+  </div>
+</section></main>
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-cols">
+      <div>
+        <a class="logo" href="/"><span class="mark"><i><b></b></i></span> Color Picker from Image</a>
+        <p class="tagline">A color picker that reads your file, right here in the browser.</p>
+      </div>
+      <div><h4>Product</h4><ul>
+        <li><a href="https://github.com/Zumelia/color-picker-from-image" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="/changelog/">Changelog</a></li>
+        <li><a href="/rate/">Rate us</a></li>
+        <li><a href="/privacy/">Privacy</a></li>
+        <li><a href="/feedback/">Feedback</a></li>
+      </ul></div>
+      <div><h4>Contact</h4><ul>
+        <li><a href="mailto:hello@zumelia.com">hello@zumelia.com</a></li>
+      </ul></div>
+    </div>
+    <div class="foot-bottom">
+      <span>Built by <a href="https://zumelia.com" target="_blank" rel="noopener">Zumelia</a> · © 2026</span>
+      <span class="spacer"></span>
+      <button class="mini icon-btn" data-theme-toggle aria-label="Switch theme">☾</button>
+    </div>
+  </div>
+</footer>
+<script>
+for (const b of document.querySelectorAll('[data-theme-toggle]')) b.addEventListener('click', () => {
+  const cur = document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem('cpfi-theme', next); } catch (e) {}
+});
+</script>
+<script>
+(() => {
+  const stars = [...document.querySelectorAll('[data-star]')];
+  const label = document.getElementById('rate-label');
+  const actions = document.getElementById('rate-actions');
+  const done = document.getElementById('rate-done');
+  const toStore = document.getElementById('rate-store');
+  const toForm = document.getElementById('rate-form');
+  const WORDS = ['', 'Not great', 'It has problems', "It's fine", 'Good', 'Love it'];
+  let picked = 0;
+
+  const paint = (n) => stars.forEach((s, i) => {
+    s.setAttribute('data-on', i < n ? '1' : '0');
+    s.setAttribute('aria-checked', i + 1 === n ? 'true' : 'false');
+  });
+
+  try {
+    const saved = JSON.parse(localStorage.getItem('cpfi-rated') || 'null');
+    if (saved && saved.stars) {
+      done.textContent = `Thanks! You rated us ${saved.stars} ★`;
+      done.hidden = false;
+      document.getElementById('rate-widget').hidden = true;
+    }
+  } catch (e) {}
+
+  stars.forEach((s, i) => {
+    s.addEventListener('mouseenter', () => { paint(i + 1); label.textContent = WORDS[i + 1]; });
+    s.addEventListener('focus', () => paint(i + 1));
+    s.addEventListener('click', () => {
+      picked = i + 1;
+      paint(picked);
+      label.textContent = WORDS[picked];
+      actions.hidden = false;
+      toStore.hidden = picked < 4;
+      toForm.hidden = picked >= 4;
+      toForm.href = `/feedback/?stars=${picked}`;
+      try { localStorage.setItem('cpfi-rated', JSON.stringify({ stars: picked, ts: Date.now() })); } catch (e) {}
+    });
+  });
+  document.getElementById('rate-widget').addEventListener('mouseleave', () => {
+    paint(picked);
+    label.textContent = picked ? WORDS[picked] : '';
+  });
+})();
+</script>
+
+</body>
+</html>
