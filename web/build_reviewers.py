@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """
-Страница для тех, кто согласился посмотреть расширение: /reviewers/go/ —
+Страница для тех, кто согласился посмотреть расширение: /reviewers/ —
 служебная, noindex, ни с чего не слинкована. Скопировано с пилота
 (json-beautifier/repo/web/build_reviewers.py), контент — под джобы пикера.
+Отличие от пилота (решение Кирилла 2026-08-07): страница ОДНА — без отдельной
+консоли пула; сообщение для чатов живёт в outreach/communities_pixelpeek.md.
 
 Отзыв человек пишет сам и целиком: это его впечатление, и подставлять за него
 слова нельзя. Страница даёт только повод — список вопросов, чтобы не сидеть
@@ -11,8 +13,7 @@
 Порядок вопросов случайный при каждом заходе. Иначе отвечают на первые три и
 все отзывы получаются про одно и то же.
 
-  /reviewers/go/   инструкция и пятнадцать вопросов
-  /reviewers/      обзор всего пула + письмо для чата
+  /reviewers/   инструкция и пятнадцать вопросов
 
     python3 build_reviewers.py
 """
@@ -25,7 +26,6 @@ HERE = Path(__file__).resolve().parent
 OUT = HERE / "reviewers"
 
 STORE = "https://chromewebstore.google.com/detail/ndcooadfngbpjbaemeeajjdkjmpefbfm"
-GO = "https://colorpickfromimage.com/reviewers/go/"
 
 # (язык, тема, что попробовать, три вопроса). Вопросы открытые: на «понятно ли»
 # и «всё ли верно» единственный естественный ответ — «да», и отзыв выходит
@@ -181,7 +181,12 @@ CSS = """
   .eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .06em;
              text-transform: uppercase; color: var(--faint); }
   h1 { font-family: var(--disp); font-size: clamp(28px, 4vw, 38px);
-       letter-spacing: -.02em; margin: 0; }
+       letter-spacing: -.02em; margin: 0;
+       display: flex; align-items: center; gap: 16px; }
+  h1 .mark { width: 46px; height: 46px; border-radius: 13px; }
+  h1 .mark i { width: 23px; height: 23px; border-width: 3.5px; }
+  h1 .mark i b { width: 8px; height: 8px; }
+  .pick { display: flex; gap: 10px; margin: 16px 0 0; flex-wrap: wrap; }
 
   .steps-box { margin-top: 30px; }
   .steps-box h2 { font-family: var(--disp); font-size: clamp(22px, 2.6vw, 26px); margin: 0; }
@@ -190,7 +195,6 @@ CSS = """
 
   .qs-title { font-family: var(--disp); margin: 38px 0 8px; font-size: clamp(24px, 3vw, 30px); }
   .qs-sub { margin: 0 0 18px; color: var(--muted); }
-  .pick { display: flex; gap: 10px; margin: 0 0 18px; flex-wrap: wrap; }
   .qs { margin: 0; padding: 0; list-style: none; }
   .qs li { padding: 15px 0; border-bottom: 1px solid var(--line2); }
   .qs li:last-child { border-bottom: 0; }
@@ -286,7 +290,8 @@ GO_TEMPLATE = """<!doctype html>
 <body>
 <main id="main">
   <section class="wrap section" style="max-width:820px">
-    <h1>Color Picker from Image</h1>
+    <h1><a href="/" aria-label="colorpickfromimage.com"><span class="mark"><i><b></b></i></span></a>Color Picker from Image</h1>
+    <div class="pick"><button class="btn btn-sm btn-ghost" data-lang-switch></button></div>
     <p class="lead" data-intro></p>
 
     <div class="steps-box" data-steps="ru" hidden>__STEPS_RU__</div>
@@ -296,7 +301,6 @@ GO_TEMPLATE = """<!doctype html>
 
     <h2 class="qs-title" data-qs-title></h2>
     <p class="qs-sub" data-qs-sub></p>
-    <div class="pick"><button class="btn btn-sm btn-ghost" data-lang-switch></button></div>
     <div class="card"><ul class="qs" data-qs></ul></div>
   </section>
 </main>
@@ -304,17 +308,6 @@ GO_TEMPLATE = """<!doctype html>
 </body>
 </html>
 """
-
-CHAT_MSG = """Ребят, кто недавно запустился — предлагаю обмен тестированием. Я ставлю ваше расширение, полчаса гоняю по-настоящему и пишу разбор: что сломалось, что непонятно в листинге, где права выглядят подозрительно. Взамен прошу того же.
-
-Моё — Color Picker from Image, достаёт точный цвет из любой картинки (файл, Ctrl+V из буфера, снимок вкладки), с лупой по пикселям и историей:
-{store}
-
-Если не знаешь, с чего начать отзыв, — вот страничка с вопросами для вдохновения:
-{go}
-
-Отзыв не обязателен и не в обмен: если не понравится — лучше напиши мне, починю."""
-
 
 def steps_html(lang):
     u = UI[lang]
@@ -330,70 +323,18 @@ def build_go(pool):
             .replace("__JS__", JS
                      .replace("__POOL__", json.dumps(pool, ensure_ascii=False))
                      .replace("__UI__", json.dumps(UI, ensure_ascii=False))))
-    (OUT / "go").mkdir(parents=True, exist_ok=True)
-    (OUT / "go" / "index.html").write_text(html, encoding="utf-8")
-    return len(html)
-
-
-def build_console(pool):
-    rows = []
-    for lang in ("ru", "en"):
-        items = []
-        for topic, tryit, qs in [(t[1], t[2], t[3]) for t in TOPICS if t[0] == lang]:
-            lis = "".join(f"<li>{escape(q)}</li>" for q in qs)
-            items.append(f"<div class='card' style='margin-bottom:14px'><h3 style='margin:0'>{escape(topic)}</h3>"
-                         f"<p style='color:var(--muted);margin:8px 0 10px'>{escape(tryit)}</p>"
-                         f"<ul style='margin:0;padding-left:20px;color:var(--muted)'>{lis}</ul></div>")
-        n = sum(1 for t in TOPICS if t[0] == lang)
-        combos = (n * (n - 1) * (n - 2) // 6) * 27
-        rows.append(f"<h2 style='margin-top:38px;font-family:var(--disp)'>{lang.upper()} — {n} тем, "
-                    f"{n * 3} вопросов, {combos:,} наборов по три</h2>" + "".join(items))
-
-    html = f"""<!doctype html>
-<html lang="ru"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Пул вопросов — служебная страница</title>
-<meta name="robots" content="noindex,nofollow">
-<link rel="stylesheet" href="/assets/fonts.css?v=1"><link rel="stylesheet" href="/assets/site.css?v=1">
-<script>try{{var t=localStorage.getItem('cpfi-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;}}catch(e){{}}</script>
-<style>{CSS}</style>
-</head><body><main><section class="wrap section" style="max-width:820px">
-<p class="eyebrow">служебная · не индексируется · ниоткуда не слинкована</p>
-<h1>Пул вопросов</h1>
-<p class="lead">Рабочая страница для людей — <a href="/reviewers/go/">/reviewers/go/</a>.
-Она показывает 15 вопросов из перемешанного пула — при каждом заходе набор другой.</p>
-<div class="card" style="margin-top:26px">
-  <h3 style="margin:0">Сообщение для чата</h3>
-  <textarea id="chat" rows="12" style="width:100%;margin-top:12px;padding:12px;
-    border:1px solid var(--line);border-radius:10px;background:var(--bg);
-    color:var(--text);font:15px/1.55 var(--sans)">{escape(CHAT_MSG.format(store=STORE, go=GO))}</textarea>
-  <p style="margin-top:12px"><button class="btn btn-sm" id="copy">Скопировать</button>
-  <span id="ok" style="margin-left:12px;color:#3E9C5C;font-weight:600"></span></p>
-</div>
-{"".join(rows)}
-</section></main>
-<script>
-document.getElementById("copy").addEventListener("click", () => {{
-  const t = document.getElementById("chat");
-  navigator.clipboard.writeText(t.value)
-    .then(() => {{ document.getElementById("ok").textContent = "Скопировано"; }})
-    .catch(() => t.select());
-}});
-</script>
-</body></html>
-"""
+    OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "index.html").write_text(html, encoding="utf-8")
+    return len(html)
 
 
 def main():
     pool = [{"lang": lang, "topic": topic, "try": tryit, "q": q}
             for lang, topic, tryit, qs in TOPICS for q in qs]
     size = build_go(pool)
-    build_console(pool)
     ru = sum(1 for p in pool if p["lang"] == "ru")
-    print(f"  reviewers/go/index.html  {len(pool)} вопросов ({ru} ru / {len(pool) - ru} en) "
+    print(f"  reviewers/index.html  {len(pool)} вопросов ({ru} ru / {len(pool) - ru} en) "
           f"из {len(TOPICS)} тем, {size:,} B")
-    print(f"  reviewers/index.html     обзор пула + письмо для чата")
 
 
 if __name__ == "__main__":
