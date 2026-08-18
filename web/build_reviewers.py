@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-Страница для тех, кто согласился посмотреть расширение: /reviewers/go/ —
+Страница для тех, кто согласился посмотреть расширение: /reviewers/ —
 служебная, noindex, ни с чего не слинкована. Скопировано с пилота
 (json-beautifier/repo/web/build_reviewers.py), контент — под джобы пикера.
-Отличие от пилота (решение Кирилла 2026-08-07): страница ОДНА, на адресе
-/reviewers/go/ (корень /reviewers/ пуст) — без отдельной консоли пула;
-сообщение для чатов живёт в outreach/communities_pixelpeek.md.
+Отличие от пилота (решение Кирилла 2026-08-07): страница ОДНА, прямо на
+/reviewers/ — без отдельной консоли пула и без /go/; сообщение для чатов
+живёт в outreach/communities_pixelpeek.md.
 
 Отзыв человек пишет сам и целиком: это его впечатление, и подставлять за него
 слова нельзя. Страница даёт только повод — список вопросов, чтобы не сидеть
@@ -14,7 +14,7 @@
 Порядок вопросов случайный при каждом заходе. Иначе отвечают на первые три и
 все отзывы получаются про одно и то же.
 
-  /reviewers/go/   инструкция и пятнадцать вопросов
+  /reviewers/   инструкция и пятнадцать вопросов
 
     python3 build_reviewers.py
 """
@@ -149,7 +149,6 @@ UI = {
             'Открой пикер (иконка на панели → <b>Open picker</b>) и брось туда любой скриншот или лого — или просто нажми <b>Ctrl+V</b>',
             "Ниже есть список вопросов для вдохновения для отзыва",
             'Вернись на страницу расширения в сторе: вкладка <b>Reviews</b> → <b>Write a review</b>, напиши своими словами и отправь',
-            'Для взаимного отзыва напиши в тг <a href="https://t.me/minisol" target="_blank" rel="noopener">@minisol</a> — и сюда же, если нашёл баг :)',
         ],
     },
     "en": {
@@ -166,7 +165,6 @@ UI = {
             'Open the picker (toolbar icon → <b>Open picker</b>) and drop in any screenshot or logo — or just press <b>Ctrl+V</b>',
             "Below is a list of questions to give you something to write about",
             'Back on the store page: <b>Reviews</b> → <b>Write a review</b>, write it in your own words and send',
-            'For a review in return, message <a href="https://t.me/minisol" target="_blank" rel="noopener">@minisol</a> on Telegram — and the same place if you found a bug :)',
         ],
     },
 }
@@ -324,8 +322,8 @@ def build_go(pool):
             .replace("__JS__", JS
                      .replace("__POOL__", json.dumps(pool, ensure_ascii=False))
                      .replace("__UI__", json.dumps(UI, ensure_ascii=False))))
-    (OUT / "go").mkdir(parents=True, exist_ok=True)
-    (OUT / "go" / "index.html").write_text(html, encoding="utf-8")
+    OUT.mkdir(parents=True, exist_ok=True)
+    (OUT / "index.html").write_text(html, encoding="utf-8")
     return len(html)
 
 
@@ -334,7 +332,7 @@ def main():
             for lang, topic, tryit, qs in TOPICS for q in qs]
     size = build_go(pool)
     ru = sum(1 for p in pool if p["lang"] == "ru")
-    print(f"  reviewers/go/index.html  {len(pool)} вопросов ({ru} ru / {len(pool) - ru} en) "
+    print(f"  reviewers/index.html  {len(pool)} вопросов ({ru} ru / {len(pool) - ru} en) "
           f"из {len(TOPICS)} тем, {size:,} B")
 
 
