@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """
-Страница для тех, кто согласился посмотреть расширение: /reviewers/ —
+Страница для тех, кто согласился посмотреть расширение: /reviewers/go/ —
 служебная, noindex, ни с чего не слинкована. Скопировано с пилота
 (json-beautifier/repo/web/build_reviewers.py), контент — под джобы пикера.
-Отличие от пилота (решение Кирилла 2026-08-07): страница ОДНА — без отдельной
-консоли пула; сообщение для чатов живёт в outreach/communities_pixelpeek.md.
+Отличие от пилота (решение Кирилла 2026-08-07): страница ОДНА, на адресе
+/reviewers/go/ (корень /reviewers/ пуст) — без отдельной консоли пула;
+сообщение для чатов живёт в outreach/communities_pixelpeek.md.
 
 Отзыв человек пишет сам и целиком: это его впечатление, и подставлять за него
 слова нельзя. Страница даёт только повод — список вопросов, чтобы не сидеть
@@ -13,7 +14,7 @@
 Порядок вопросов случайный при каждом заходе. Иначе отвечают на первые три и
 все отзывы получаются про одно и то же.
 
-  /reviewers/   инструкция и пятнадцать вопросов
+  /reviewers/go/   инструкция и пятнадцать вопросов
 
     python3 build_reviewers.py
 """
@@ -323,8 +324,8 @@ def build_go(pool):
             .replace("__JS__", JS
                      .replace("__POOL__", json.dumps(pool, ensure_ascii=False))
                      .replace("__UI__", json.dumps(UI, ensure_ascii=False))))
-    OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / "index.html").write_text(html, encoding="utf-8")
+    (OUT / "go").mkdir(parents=True, exist_ok=True)
+    (OUT / "go" / "index.html").write_text(html, encoding="utf-8")
     return len(html)
 
 
@@ -333,7 +334,7 @@ def main():
             for lang, topic, tryit, qs in TOPICS for q in qs]
     size = build_go(pool)
     ru = sum(1 for p in pool if p["lang"] == "ru")
-    print(f"  reviewers/index.html  {len(pool)} вопросов ({ru} ru / {len(pool) - ru} en) "
+    print(f"  reviewers/go/index.html  {len(pool)} вопросов ({ru} ru / {len(pool) - ru} en) "
           f"из {len(TOPICS)} тем, {size:,} B")
 
 
