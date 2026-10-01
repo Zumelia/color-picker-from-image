@@ -270,6 +270,11 @@ kbd {
 .sec-head p { margin: 0; font-size: 16px; color: var(--muted); line-height: 1.55; }
 
 .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+/* Атрибут hidden обязан побеждать display у классов (.bcard — flex): иначе блок
+   «Got it — thanks» на /feedback/ и /rate/ виден всегда, а форма после отправки
+   не прячется (грабля 2026-10-01). */
+[hidden] { display: none !important; }
+
 .bcard {
   background: var(--card); border: 1px solid var(--line); border-radius: 20px;
   padding: 26px; display: flex; flex-direction: column; gap: 10px;

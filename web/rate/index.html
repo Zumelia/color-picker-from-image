@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Rate Color Picker from Image</title>
-<meta name="description" content="Four or five stars go to the Chrome Web Store, one to three come to us privately.">
+<meta name="description" content="Rate Color Picker from Image on the Chrome Web Store, or tell us what is broken.">
 <link rel="canonical" href="https://colorpickfromimage.com/rate/">
 <meta name="robots" content="noindex,follow">
 <link rel="icon" href="/assets/favicon.png?v=1" type="image/png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=1">
 <link rel="stylesheet" href="/assets/fonts.css?v=1">
-<link rel="stylesheet" href="/assets/site.css?v=1">
+<link rel="stylesheet" href="/assets/site.css?v=2">
 <script>try{var t=localStorage.getItem('cpfi-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;}catch(e){}</script>
 </head>
 <body>
@@ -38,34 +38,45 @@
       border:1px solid var(--line);border-radius:18px;background:var(--card)}
     .rate h1{font-family:var(--disp);font-size:32px;letter-spacing:-.02em;margin:0 0 10px}
     .rate .lead{color:var(--muted);margin:0 auto;max-width:52ch;line-height:1.6}
-    .stars{display:inline-flex;gap:6px;margin:20px 0 4px}
-    .star{width:46px;height:46px;border:0;background:transparent;color:var(--line);
-      font-size:32px;line-height:1;cursor:pointer;padding:0;transition:color .1s}
-    .star[data-on="1"]{color:#EDAE49}
-    .rate-label{min-height:24px;color:var(--muted);font-size:14px;margin:0}
-    .rate-actions{display:flex;justify-content:center;gap:12px;margin-top:16px;flex-wrap:wrap}
-    .rate-alt{margin-top:26px;color:var(--muted);font-size:14.5px}
+    .rate-actions{display:flex;justify-content:center;gap:12px;margin-top:22px;flex-wrap:wrap}
   </style>
   <div class="rate">
     <h1>Using the extension? Rate it.</h1>
-    <p class="lead">Four or five stars go to the Chrome Web Store. One to three come
-      to us privately, where a fix can actually happen.</p>
-    <div id="rate-widget">
-      <div class="stars" role="radiogroup" aria-label="Rate Color Picker from Image">
-        <button class="star" data-star="1" role="radio" aria-checked="false" aria-label="1 star">★</button>
-        <button class="star" data-star="2" role="radio" aria-checked="false" aria-label="2 stars">★</button>
-        <button class="star" data-star="3" role="radio" aria-checked="false" aria-label="3 stars">★</button>
-        <button class="star" data-star="4" role="radio" aria-checked="false" aria-label="4 stars">★</button>
-        <button class="star" data-star="5" role="radio" aria-checked="false" aria-label="5 stars">★</button>
-      </div>
-      <p class="rate-label" id="rate-label"></p>
-      <div class="rate-actions" id="rate-actions" hidden>
-        <a class="btn" id="rate-store" href="https://chromewebstore.google.com/detail/ndcooadfngbpjbaemeeajjdkjmpefbfm/reviews" target="_blank" rel="noopener" hidden>Rate on the Chrome Web Store →</a>
-        <a class="btn btn-ghost" id="rate-form" href="/feedback/" hidden>Tell us what's wrong →</a>
-      </div>
+    <p class="lead">A rating on the Chrome Web Store helps other designers find it, whatever
+      the number of stars.</p>
+    <!-- Оценка и жалоба одинаково для всех: кнопка в стор и сразу под ней
+         раскрытая форма. Без звёзд и без развилки «4–5 в стор, 1–3 в форму» —
+         это review gating (решение 2026-10-01). Форма — та же, что на /feedback/. -->
+    <div class="rate-actions">
+      <a class="btn" href="https://chromewebstore.google.com/detail/ndcooadfngbpjbaemeeajjdkjmpefbfm/reviews" target="_blank" rel="noopener">Rate on the Chrome Web Store →</a>
     </div>
-    <p id="rate-done" hidden></p>
-    <p class="rate-alt">Not ready to rate? <a href="/feedback/">Tell us why</a> instead.</p>
+  </div>
+  <div style="max-width:680px;margin:40px auto 0">
+    <h2 style="font-family:var(--disp);font-size:24px;letter-spacing:-.01em;margin:0 0 6px">Something wrong? Tell us here</h2>
+    <p style="color:var(--muted);margin:0 0 20px">A bug, a missing feature, a complaint. It goes straight to the person who
+      built it, and you can still rate it on the store as well.</p>
+  <form id="f" class="bcard" style="gap:16px" action="https://formspree.io/f/mwvgrkov" method="post">
+    <input type="hidden" name="_subject" value="colorpickfromimage.com: Rate page">
+    <input type="hidden" name="Page" id="h-page" value="">
+    <input type="hidden" name="Browser" id="h-browser" value="">
+    <div><label style="display:block;font-weight:700;margin-bottom:6px">What is it about?</label>
+    <select name="Topic" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);font:inherit">
+      <option>A bug</option><option>A missing feature</option><option>A question</option><option>Something else</option>
+    </select></div>
+    <div><label for="m" style="display:block;font-weight:700;margin-bottom:6px">Message</label>
+    <textarea id="m" name="Message" rows="6" required placeholder="The more specific, the faster the fix." style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);font:inherit"></textarea></div>
+    <div><label for="e" style="display:block;font-weight:700;margin-bottom:6px">Email <span style="color:var(--faint);font-weight:400;font-size:13px">optional</span></label>
+    <input id="e" type="email" name="email" placeholder="you@example.com" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);font:inherit"></div>
+    <div style="display:flex;align-items:center;gap:14px">
+      <button class="btn" type="submit" style="border:0;cursor:pointer">Send</button>
+      <span style="color:var(--faint);font-size:13px">Or open an issue on <a href="https://github.com/Zumelia/color-picker-from-image/issues" target="_blank" rel="noopener">GitHub</a>.</span>
+    </div>
+  </form>
+  <div id="ok" class="bcard" tabindex="-1" hidden style="margin-top:20px">
+    <h2 style="margin:0;font-family:var(--disp);font-size:22px">Got it — thanks.</h2>
+    <p style="color:var(--muted);margin:0">Bugs and feature requests go straight on the list.</p>
+  </div>
+  <p id="fail" hidden style="color:#C0392B;margin-top:14px">Couldn't send that — your text is still here. Try again, or write to <a href="mailto:hello@zumelia.com">hello@zumelia.com</a>.</p>
   </div>
 </section></main>
 <footer class="foot">
@@ -101,51 +112,19 @@ for (const b of document.querySelectorAll('[data-theme-toggle]')) b.addEventList
   try { localStorage.setItem('cpfi-theme', next); } catch (e) {}
 });
 </script>
+
 <script>
-(() => {
-  const stars = [...document.querySelectorAll('[data-star]')];
-  const label = document.getElementById('rate-label');
-  const actions = document.getElementById('rate-actions');
-  const done = document.getElementById('rate-done');
-  const toStore = document.getElementById('rate-store');
-  const toForm = document.getElementById('rate-form');
-  const WORDS = ['', 'Not great', 'It has problems', "It's fine", 'Good', 'Love it'];
-  let picked = 0;
-
-  const paint = (n) => stars.forEach((s, i) => {
-    s.setAttribute('data-on', i < n ? '1' : '0');
-    s.setAttribute('aria-checked', i + 1 === n ? 'true' : 'false');
-  });
-
-  try {
-    const saved = JSON.parse(localStorage.getItem('cpfi-rated') || 'null');
-    if (saved && saved.stars) {
-      done.textContent = `Thanks! You rated us ${saved.stars} ★`;
-      done.hidden = false;
-      document.getElementById('rate-widget').hidden = true;
-    }
-  } catch (e) {}
-
-  stars.forEach((s, i) => {
-    s.addEventListener('mouseenter', () => { paint(i + 1); label.textContent = WORDS[i + 1]; });
-    s.addEventListener('focus', () => paint(i + 1));
-    s.addEventListener('click', () => {
-      picked = i + 1;
-      paint(picked);
-      label.textContent = WORDS[picked];
-      actions.hidden = false;
-      toStore.hidden = picked < 4;
-      toForm.hidden = picked >= 4;
-      toForm.href = `/feedback/?stars=${picked}`;
-      try { localStorage.setItem('cpfi-rated', JSON.stringify({ stars: picked, ts: Date.now() })); } catch (e) {}
-    });
-  });
-  document.getElementById('rate-widget').addEventListener('mouseleave', () => {
-    paint(picked);
-    label.textContent = picked ? WORDS[picked] : '';
-  });
-})();
+document.getElementById('h-page').value = location.href;
+document.getElementById('h-browser').value = navigator.userAgent;
+var f = document.getElementById('f');
+f.addEventListener('submit', function (e) {
+  e.preventDefault();
+  document.getElementById('fail').hidden = true;
+  fetch(f.action, { method: 'POST', body: new FormData(f), headers: { 'Accept': 'application/json' } })
+    .then(function (r) { if (!r.ok) throw new Error();
+      f.hidden = true; var ok = document.getElementById('ok'); ok.hidden = false; ok.focus();
+    }).catch(function () { document.getElementById('fail').hidden = false; });
+});
 </script>
-
 </body>
 </html>
