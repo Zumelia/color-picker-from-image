@@ -139,9 +139,9 @@ UI = {
         "title": "Вопросы для вдохновения",
         "sub": "Отвечать на все не надо — выбери то, что зацепило, и напиши своими словами.",
         "swap": "In English",
-        "intro": "Спасибо, что смотришь. Поставь, погоняй на своих картинках — а ниже "
-                 "вопросы на случай, если не знаешь, с чего начать отзыв.",
-        "nope": "Если расширение не понравилось — не пиши отзыв, напиши напрямую: ",
+        "intro": "Спасибо, что пользуешься. Ниже — как оставить отзыв в сторе и "
+                 "вопросы на случай, если не знаешь, с чего начать.",
+        "nope": "Нашёл баг или чего-то не хватает? Напиши напрямую, починю: ",
         "nope_link": "форма обратной связи",
         "steps_title": "Как оставить отзыв",
         "steps": [
@@ -155,9 +155,9 @@ UI = {
         "title": "Questions for inspiration",
         "sub": "No need to answer them all — pick whatever struck you and write it your way.",
         "swap": "По-русски",
-        "intro": "Thanks for taking a look. Install it, use it on your own images — the "
-                 "questions below are there in case you don't know where to start.",
-        "nope": "If you didn't like it, please don't review it — tell me instead: ",
+        "intro": "Thanks for using it. Below: how to leave a review on the store, and "
+                 "some questions in case you don't know where to start.",
+        "nope": "Found a bug or something missing? Tell me directly and I'll fix it: ",
         "nope_link": "feedback form",
         "steps_title": "How to leave a review",
         "steps": [
@@ -282,7 +282,7 @@ GO_TEMPLATE = """<!doctype html>
 <meta name="robots" content="noindex,nofollow">
 <link rel="icon" href="/assets/favicon.png?v=1" type="image/png">
 <link rel="stylesheet" href="/assets/fonts.css?v=1">
-<link rel="stylesheet" href="/assets/site.css?v=1">
+<link rel="stylesheet" href="/assets/site.css?v=2">
 <script>try{var t=localStorage.getItem('cpfi-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;}catch(e){}</script>
 <style>__CSS__</style>
 </head>
